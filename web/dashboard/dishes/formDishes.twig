@@ -1,0 +1,137 @@
+  <!-- Dishes Modal Window -->
+  <div id="formDishModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="formDishModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 v-if="Dish.id" class="modal-title" id="formDishModalLabel">Editar Plato</h5>
+        <h5 v-else class="modal-title" id="formDishModalLabel">Nuevo Plato</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="Dish = [];file = false;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="formDish" class="js-validate">
+        <div class="modal-body">
+          <div class="card-body p-5">
+              <div class="row">
+                <!-- Input -->
+                <div class="col-sm-6 mb-6">
+                  <div class="js-form-message">
+                    <label class="form-label">
+                      Nombre
+                      <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="text" class="form-control" v-model="Dish.name" name="name" minlength="3" placeholder="Plato" aria-label="Plato" required
+                          data-msg="Por favor ingrese un nombre valido."
+                          data-error-class="u-has-error"
+                          data-success-class="u-has-success">
+                  </div>
+                </div>
+                <!-- End Input -->
+
+                <!-- Input -->
+                <div class="col-sm-6 mb-6">
+                  <div class="js-form-message">
+                    <label class="form-label">
+                      Precio
+                      <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input type="number" v-model="Dish.price" name="price" class="form-control" placeholder="Precio" aria-label="Precio" min="1000" required
+                              data-msg="Por favor enter a valid email address."
+                              data-error-class="u-has-error"
+                              data-success-class="u-has-success">
+                              
+                    </div>
+                  </div>
+                </div>
+                <!-- End Input -->
+
+                <div class="w-100"></div>
+              </div>
+              <div class="row">
+                <!-- Input -->
+                <div class="col-sm-12 mb-6 text-center">
+                  <div class="js-form-message">
+                    <!-- Update Avatar Form -->                 
+                    <div v-if="file" class="mx-auto mb-6">
+                      <img class="img-fluid rounded" :src="file.photoURL" alt="Image Description">
+                    </div>
+                    <div v-else-if="Dish.photoURL" class="mx-auto mb-6">
+                      <img class="img-fluid rounded" :src="Dish.photoURL" alt="Image Description">
+                    </div>   
+
+                    <div class="media-body">
+                      <label class="btn btn-sm btn-primary transition-3d-hover file-attachment-btn mb-1 mb-sm-0 mr-1" for="file">
+                        Subir nueva imagen
+                        <input id="file" name="file-attachment" type="file" class="file-attachment-btn__label" ref="file" @change="handleFileUpload()">
+                      </label>
+
+                      <!--a href="javascript:void(0)" class="btn btn-sm btn-soft-secondary transition-3d-hover mb-1 mb-sm-0">Borrar</a-->
+                    </div>
+                  </div>
+                </div>
+                <!-- End Input -->
+                <div class="col-sm-12 mb-6">              
+                  <div class="js-form-message">
+                    <label class="form-label">
+                      Grupo
+                    </label>
+                    <div id="group">
+                      <select id="selectGroup" v-modal="Dish.group" name="group" class="js-select mb-3 form-control selectpicker dropdown-select" @change="newGroup" 
+                        data-style="btn-sm btn-primary" 
+                        data-msg="Por favor seleccione un grupo valido."
+                        data-error-class="u-has-error"
+                        data-success-class="u-has-success">                                             
+                        <option value="0">+ Añadir Nuevo Grupo</option>
+                        <option :value="Dish.group">([Dish.group])</option>   
+                        <option value="Entradas">Entradas</option>
+                        <option value="Comidas">Comidas</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Postres">Postres</option>                   
+                      </select>
+                    </div>
+                    <input id="groupInput" type="text" class="form-control mb-3 d-none" v-model="Dish.group" name="group" minlengteh="3" placeholder="Nuevo Grupo" aria-label="Nuevo Grupo" required
+                      data-msg="Por favor ingrese un grupo valido."
+                      data-error-class="u-has-error"
+                      data-success-class="u-has-success" disabled>
+                        
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- Input -->
+                <div class="col-sm-12 mb-6">
+                  <div class="js-form-message">
+                    <label class="form-label">
+                      Descripcion
+                      <span class="text-danger">*</span>
+                    </label>
+
+                    <div class="input-group">
+                      <textarea v-model="Dish.description" name="description" class="form-control" rows="4" placeholder="Escribe aqui la descripcion de tu plato..." aria-label="Escribe aqui la descripcion de tu plato..." required
+                        data-msg="Por favor ingrese una descripcion."
+                        data-error-class="u-has-error"
+                        data-success-class="u-has-success"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Input -->
+              </div>
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" data-dismiss="modal"  @click="Dish = [];file = '';">Cancelar</button>
+            <button v-if="Dish.id" type="submit" class="btn btn-sm btn-warning transition-3d-hover"  @click="updateDish(Dish.id)">Editar Plato</button>
+            <button v-else type="submit" class="btn btn-sm btn-primary transition-3d-hover" @click="addDish">Añadir Plato</button>
+        </div>
+        <!-- End Buttons -->
+      </form>
+    </div>
+  </div>
+  <!-- End Dishes Modal Window -->

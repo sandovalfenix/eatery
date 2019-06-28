@@ -1,0 +1,206 @@
+{% extends "dashboard_layout.twig" %}
+{% block title %}Platos{% endblock %}
+
+{% block cssPlugins %}
+  <link rel="stylesheet" href="{{assets}}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="{{assets}}/vendor/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
+{% endblock %}
+{% block container %}
+<main id="appDishes">
+  <div class="bg-light animated fadeIn slow delay-2s">
+    <div class="container space-2">
+      <div class="row justify-content-between align-items-center mb-4">
+          <!-- Title -->
+          <div class="col-sm-4 col-md-6 mb-3 mb-sm-0">
+          <h2 class="h6 mb-0">Total Platos Registrados ([Dishes.length])</h2>
+          </div>
+          <!-- End Title -->
+
+          <!-- Filter -->
+          <div class="col-sm-8 col-md-6 text-sm-right">
+            <ul class="list-inline mb-0">
+                <li v-if="Dishes" class="list-inline-item mb-3">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-warning text-white border-0" id="searchProperty">
+                        <span class="fas fa-search"></span>
+                      </span>
+                    </div>
+                    <input class="form-control border-0" type="text" v-model="search" placeholder="Buscar" >
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn btn-sm btn-soft-primary" href="javascript:void(0)"
+                    data-toggle="modal"
+                    data-target="#formDishModal">
+                    <span class="fas fa-plus"></span> Añadir
+                  </a>
+                </li>
+            </ul>
+          </div>
+          <!-- End Filter -->
+      </div>
+      <div class="mb-7">
+        <div v-if="filteredDishes" class="row">
+          <!-- Property Item -->
+          <div v-for="(Dish, index) in filteredDishes" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)" class="card mb-5 col-xl-3 col-md-4 col-sm-6 col-12 p-0 animated fadeInUp">
+            <!-- Gallery -->
+            <img v-if="Dish.photoURL" class="card-img-top w-100" :src="Dish.photoURL" alt="Image Description">
+            <img v-else class="card-img-top w-65 mx-auto" src="https://image.flaticon.com/icons/svg/1847/1847172.svg" width="Image Description">
+            <div class="position-absolute top-0 left-0 pt-2 pl-3">
+              <span class="badge badge-success"><b>Grupo:</b> ([Dish.group])</span>
+            </div>
+            <div class="position-absolute top-0 right-0 py-2 px-3">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-12 bg-dark rounded-left">
+                  <h2 class="h5 text-white mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                </div>
+              </div>
+            </div>
+            <!-- End Gallery -->
+            <div class="card-body p-4">
+              <!-- Posted Info -->
+              <div class="media align-items-center pb-3">
+                <div class="media-body">                         
+                  <b class="d-block">([Dish.name])</b>
+                </div>
+              </div>
+              <!-- End Posted Info -->
+              <!-- Posted Info -->
+              <div class="media align-items-center border-top py-3 mb-3">
+                <div class="media-body">
+                  <small class="d-block text-muted"><b>Descripcion:</b></small>
+                  <small class="d-block">([Dish.description])</small>
+                </div>
+              </div>
+              <!-- End Posted Info -->
+            </div>            
+            <!-- Contacts -->
+            <div class="card-footer d-flex align-items-center font-size-1 mx-auto">
+              <a class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" href="javascript:;"
+                data-toggle="modal"
+                data-target="#formDishModal"
+                @click="editDish(Dish.id)">
+                Editar                  
+                <span class="fas fa-edit mr-1"></span>
+              </a>
+              <a class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" href="javascript:;"
+                data-toggle="modal"
+                data-target="#alertDeleteModal"
+                @click="deleteDish(Dish.id)">
+                Borrar                  
+                <span class="fas fa-trash mr-1"></span>
+              </a>
+            </div>
+          </div>
+          <!-- End Property Item -->
+        </div>
+        <div v-else-if="filteredDishes == false && Dishes && search == ''" class="row">
+          <!-- Property Item -->
+          <div v-for="(Dish, index) in Dishes" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)" class="card mb-5 col-xl-3 col-md-4 col-sm-6 col-12 p-0 animated fadeInUp">
+            <!-- Gallery -->
+            <img v-if="Dish.photoURL" class="card-img-top w-100" :src="Dish.photoURL" alt="Image Description">
+            <img v-else class="card-img-top w-65 mx-auto" src="https://image.flaticon.com/icons/svg/1847/1847172.svg" width="Image Description">
+            <div class="position-absolute top-0 left-0 pt-2 pl-3">
+              <span class="badge badge-success"><b>Grupo:</b> ([Dish.group])</span>
+            </div>
+            <div class="position-absolute top-0 right-0 py-2 px-3">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-12 bg-dark rounded-left">
+                  <h2 class="h5 text-white mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                </div>
+              </div>
+            </div>
+            <!-- End Gallery -->
+            <div class="card-body p-4">
+              <!-- Posted Info -->
+              <div class="media align-items-center pb-3">
+                <div class="media-body">                         
+                  <b class="d-block">([Dish.name])</b>
+                </div>
+              </div>
+              <!-- End Posted Info -->
+              <!-- Posted Info -->
+              <div class="media align-items-center border-top py-3 mb-3">
+                <div class="media-body">
+                  <small class="d-block text-muted"><b>Descripcion:</b></small>
+                  <small class="d-block">([Dish.description])</small>
+                </div>
+              </div>
+              <!-- End Posted Info -->
+            </div>            
+            <!-- Contacts -->
+            <div class="card-footer d-flex align-items-center font-size-1 mx-auto">
+              <a class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" href="javascript:;"
+                data-toggle="modal"
+                data-target="#formDishModal"
+                @click="editDish(Dish.id)">
+                Editar                  
+                <span class="fas fa-edit mr-1"></span>
+              </a>
+              <a class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" href="javascript:;"
+                data-toggle="modal"
+                data-target="#alertDeleteModal"
+                @click="deleteDish(Dish.id)">
+                Borrar                  
+                <span class="fas fa-trash mr-1"></span>
+              </a>
+            </div>
+          </div>
+          <!-- End Property Item -->
+        </div>
+
+        <div v-else class="card-deck d-block d-md-flex">
+          <!-- Projects -->
+          <div class="card mb-5">
+              <div class="card-body p-4 text-center">
+              <span>No hay registro disponibles</span>
+              </div>
+          </div>
+          <!-- End Projects -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center">
+            <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <li v-show="pag.pre" class="page-item ml-0">
+                <a class="page-link" href="javascript:void(0)" aria-label="Previous" @click.prevent="app.pagActive(pag.active,'pre')">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                </li>
+                <li id="page-1" class="page-item active"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(1)">1</a></li>              
+                <li v-for="index in pag.numPages" v-show="index > 1" :id="'page-'+index" class="page-item"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(index)">([index])</a></li>
+                <li v-for="index in pag.numPages" v-show="index > 5" class="page-item disabled"><a class="page-link" href="javascript:void(0)">...</a></li>
+                <li class="page-item">
+                <a  v-show="pag.next" class="page-link" href="javascript:void(0)" aria-label="Next" @click="app.pagActive(pag.active,'next')">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+                </li>
+            </ul>
+            </nav>
+
+            <small v-if="pag.numLength >= pag.numResult" class="d-none d-sm-inline-block text-secondary">Mostrando ([pag.active * pag.numResult]) de ([pag.numPages * pag.numResult]) Registros</small>
+						<small v-else class="d-none d-sm-inline-block text-secondary">Mostrando ([pag.active * pag.numLength]) Registros</small>
+        </div>
+        <!-- End Pagination -->
+      </div>
+    </div>
+  </div>
+  <!-- End Content Section -->
+  {% include "/dishes/formDishes.twig" %}
+</main>
+{% endblock %}
+{% block addJsPlugins %}
+  <script src="{{assets}}/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  <script src="{{assets}}/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+{% endblock %}
+{% block addJsFront %}
+  <script src="{{assets}}/js/components/hs.selectpicker.js"></script>
+  <script src="{{assets}}/js/components/hs.range-datepicker.js"></script>
+{% endblock %}
+{% block appScript %}
+  <script src="/src/js/appDishes.js"></script>
+{% endblock %}

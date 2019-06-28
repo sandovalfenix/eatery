@@ -24,7 +24,7 @@ const app = new Vue({
           console.log("Document data:", doc.data());
           var data = doc.data();
           data.id = id;
-          app._data.User = data;
+          app.User = data;
         } else {
           console.log("No such document!");
         }
@@ -46,20 +46,20 @@ const app = new Vue({
       var docRef = db.collection("Users").doc(id).update(this.User)
       .then(function() {
         console.log("Actualizacion Completada");
-        app._data.User = [];
+        app.User = [];
       }).catch(function(error) {
         console.log("Error al actualizar documento:", error);
       });
     }
   },
-  delimiters: ['([', '])'],
+  delimiters: ['({', '})'],
 });
 
 db.collection("Users").orderBy('username').onSnapshot(function(querySnapshot) {
-  app._data.Users = [];
+  app.Users = [];
   querySnapshot.forEach(function(doc) {
     var data = doc.data();
     data.id = doc.id;
-    app._data.Users.push(data);
+    app.Users.push(data);
   });
 });

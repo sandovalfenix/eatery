@@ -23,12 +23,6 @@ $(document).on('ready', function () {
   // initialization of header
   $.HSCore.components.HSHeader.init($('#header'));
 
-  // initialization of unfold component
-  $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
-    afterOpen: function () {
-      $(this).find('input[type="search"]').focus();
-    }
-  });
 
   // initialization of malihu scrollbar
   $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
@@ -43,6 +37,9 @@ $(document).on('ready', function () {
   $.HSCore.components.HSModalWindow.init('[data-modal-target]', '.js-modal-window', {
     autonomous: true
   });
+
+  // initialization of unfold component
+  $.HSCore.components.HSUnfold.init($('[data-unfold-target]'));
 
   // initialization of step form
   $.HSCore.components.HSStepForm.init('.js-step-form');
@@ -69,4 +66,13 @@ $(document).on('ready', function () {
 
   // initialization of go to
   $.HSCore.components.HSGoTo.init('.js-go-to');
+
+  // initialization of select picker
+  $.HSCore.components.HSSelectPicker.init('.js-select');
+
+  // initialization of range datepicker
+  $.HSCore.components.HSRangeDatepicker.init('.js-range-datepicker');
+
+  // initialization of popups
+  $.HSCore.components.HSFancyBox.init('.js-fancybox');
 });

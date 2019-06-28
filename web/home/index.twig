@@ -1,7 +1,306 @@
 {% extends "default_layout.twig" %}
-{% block title %}Home - Yanic{% endblock %}
+{% block title %}Home | Eatery{% endblock %}
+
+{% block header %}
+<header id="header" class="u-header u-header--bg-transparent u-header--abs-top">
+    <div class="u-header__section">
+      <div id="logoAndNav" class="container-fluid">
+        <!-- Nav -->
+        <nav class="navbar navbar-expand u-header__navbar">
+          <!-- White Logo -->
+          <a class="d-none d-lg-flex navbar-brand u-header__navbar-brand u-header__navbar-brand-center u-header__navbar-brand-text-white" href="#" aria-label="Front">
+            <img src="{{assets}}/img/logo_eatery.png" width="65">
+            <span class="u-header__navbar-brand-text">Eatery</span>
+          </a>
+          <!-- End White Logo -->
+
+          <!-- Default Logo -->
+          <a class="d-flex d-lg-none navbar-brand u-header__navbar-brand u-header__navbar-brand-center u-header__navbar-brand-collapsed" href="index.html" aria-label="Front">
+            <img src="{{assets}}/img/logo_eatery.png" width="50">
+            <span class="d-inline-block u-header__navbar-brand-text">Eatery</span>
+          </a>
+          <!-- End Default Logo -->
+
+          <!-- Button -->
+          <div class="ml-auto d-none d-sm-block">
+            <a class="btn btn-sm btn-primary transition-3d-hover" href="#" target="_blank">
+              <i class="fab fa-google-play"></i> Descargar
+            </a>
+          </div>
+          <!-- End Button -->
+        </nav>
+        <!-- End Nav -->
+      </div>
+    </div>
+  </header>
+{% endblock %}
 {% block container %}
+  <!-- ========== MAIN ========== -->
+  <main id="app" role="main">
+    <!-- Form -->
+    <div class="d-flex align-items-center position-relative height-lg-100vh">
+      <div class="col-lg-5 col-xl-4 d-none d-lg-flex align-items-center gradient-half-primary-v1 height-lg-100vh px-0">
+        <div class="w-100 p-5">
+          <!-- SVG Quote -->
+          <figure class="text-center mb-5 mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px"
+              viewBox="0 0 8 8" style="enable-background:new 0 0 8 8;" xml:space="preserve">
+              <path class="fill-white" d="M3,1.3C2,1.7,1.2,2.7,1.2,3.6c0,0.2,0,0.4,0.1,0.5c0.2-0.2,0.5-0.3,0.9-0.3c0.8,0,1.5,0.6,1.5,1.5c0,0.9-0.7,1.5-1.5,1.5
+                C1.4,6.9,1,6.6,0.7,6.1C0.4,5.6,0.3,4.9,0.3,4.5c0-1.6,0.8-2.9,2.5-3.7L3,1.3z M7.1,1.3c-1,0.4-1.8,1.4-1.8,2.3
+                c0,0.2,0,0.4,0.1,0.5c0.2-0.2,0.5-0.3,0.9-0.3c0.8,0,1.5,0.6,1.5,1.5c0,0.9-0.7,1.5-1.5,1.5c-0.7,0-1.1-0.3-1.4-0.8
+                C4.4,5.6,4.4,4.9,4.4,4.5c0-1.6,0.8-2.9,2.5-3.7L7.1,1.3z"/>
+            </svg>
+          </figure>
+          <!-- End SVG Quote -->
+
+          <!-- Testimonials Carousel Main -->
+          <div id="testimonialsNavMain" class="js-slick-carousel u-slick mb-4"
+              data-infinite="true"
+              data-autoplay="true"
+              data-speed="5000"
+              data-fade="true"
+              data-nav-for="#testimonialsNavPagination">
+            <div class="js-slide">
+              <!-- Testimonials -->
+              <div class="w-md-80 w-lg-60 text-center mx-auto">
+                  <blockquote class="h5 text-white font-weight-normal mb-4">Es novedoso y la eficas se realiza de forma rápida y sincronizada. ¡En tiempo real!</blockquote>
+                  <h2 class="h6 text-white-70">Restaurante YouMe Sushi, Chile</h2>
+              </div>
+              <!-- End Testimonials -->
+            </div>
+
+            <div class="js-slide">
+              <!-- Testimonials -->
+              <div class="w-md-80 w-lg-60 text-center mx-auto">
+                <blockquote class="h5 text-white font-weight-normal mb-4">La app es realmente agradable y ofrece un gran conjunto de opciones. ¡Gracias!</blockquote>
+                <h2 class="h6 text-white-70">Restaurante Lucia´s, Chile</h2>
+              </div>
+              <!-- End Testimonials -->
+            </div>
+
+            <div class="js-slide">
+              <!-- Testimonials -->
+              <div class="w-md-80 w-lg-60 text-center mx-auto">
+                <blockquote class="h5 text-white font-weight-normal mb-4">Me encanta Eatery, me encanta su facilidad de uso, me encanta el hecho de que tengo total libertad para trabajar...</blockquote>
+                <h3 class="h6 text-white-70">Foob Style, Colombia</h3>
+              </div>
+              <!-- End Testimonials -->
+            </div>
+          </div>
+          <!-- End Testimonials Carousel Main -->
+
+          <!-- Testimonials Carousel Pagination -->
+          <div id="testimonialsNavPagination" class="js-slick-carousel u-slick u-slick--transform-off u-slick--pagination-modern mx-auto"
+              data-infinite="true"
+              data-autoplay="true"
+              data-speed="5000"
+              data-center-mode="true"
+              data-slides-show="3"
+              data-is-thumbs="true"
+              data-focus-on-select="true"
+              data-nav-for="#testimonialsNavMain">
+          </div>
+          <!-- End Testimonials Carousel Pagination -->
+
+          <!-- Clients -->
+          <div class="position-absolute right-0 bottom-0 left-0 text-center p-5">
+            <h4 class="h6 text-white-70 mb-3">Aitheria partners</h4>
+            <div class="d-flex justify-content-center">
+              <div class="mx-4">
+                <img class="u-clients" src="{{assets}}/svg/clients-logo/logo-firebase.png" alt="Image Description">
+              </div>
+              <div class="mx-4">
+                <img class="u-clients" src="{{assets}}/svg/clients-logo/google-white.png" alt="Image Description">
+              </div>
+              <div class="mx-4">
+                <img class="u-clients" src="{{assets}}/svg/clients-logo/cropped-logo.png" alt="Image Description">
+              </div>
+            </div>
+          </div>
+          <!-- End Clients -->
+        </div>
+      </div>
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-8 col-lg-7 col-xl-6 offset-md-2 offset-lg-2 offset-xl-3 space-2 space-lg-0">
+            <div v-if="alerts.length > 0" v-for="alert in alerts" class="row no-gutters">
+              <div :class="'alert '+alert.type+' alert-dismissible fade show'" role="alert">
+                <span v-html="alert.msj"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+            </div>
+            <!-- Form Sign In -->
+            <form id="signIn" class="js-validate mt-5" @submit="signIn">
+              <!-- Title -->
+              <div class="mb-7">
+                <h2 class="h3 text-primary font-weight-normal mb-0">Bienvenido a <span class="font-weight-semi-bold">Eatery</span></h2>
+                <p>Inicie sesión para administrar su cuenta.</p>
+              </div>
+              <!-- End Title -->
+
+              <!-- Form Group -->
+              <div class="js-form-message form-group">
+                <label class="form-label" for="signinSrEmail">Correo Electronico</label>
+                <input type="email" class="form-control" name="email"
+                v-model="User.email" id="signinSrEmail" placeholder="Correo Electronico" aria-label="Correo Electronico" required
+                      data-msg="Por favor ingresa un Correo Electronico valido."
+                      data-error-class="u-has-error"
+                      data-success-class="u-has-success"
+                      autocomplete="username">
+              </div>
+              <!-- End Form Group -->
+
+              <!-- Form Group -->
+              <div class="js-form-message form-group">
+                <label class="form-label" for="signinSrPassword">
+                  <span class="d-flex justify-content-between align-items-center">
+                    Contraseña
+                    <a class="link-muted text-capitalize font-weight-normal" href="recover-account.html">¿Se te olvidó tu contraseña?</a>
+                  </span>
+                </label>
+                <input type="password" minlength="6" class="form-control" name="password" v-model="User.password" id="signinSrPassword" placeholder="********" aria-label="********" required
+                      data-msg="Tu contraseña es invalida. Por favor intenta de nuevo."
+                      data-error-class="u-has-error"
+                      data-success-class="u-has-success"
+                      autocomplete="current-password">
+              </div>
+              <!-- End Form Group -->
+
+              <!-- Button -->
+              <div class="row align-items-center mb-5">
+                <div class="col-6">
+                  <span class="small text-muted">¿No tienes una cuenta?</span>
+                  <a class="small" href="javascript:void(0);" @click="changeSignUp">Regístrate</a>
+                </div>
+
+                <div class="col-6 text-right">
+                  <button type="submit" class="btn btn-primary transition-3d-hover">Empezar</button>
+                </div>
+              </div>
+              <!-- End Button -->
+            </form>
+            <!-- End Form -->
+
+             <!-- Form Sign Up-->
+            <form id="signUp" class="js-validate mt-5 d-none" @submit="signUp">
+              <!-- Title -->
+              <div class="mb-7">
+                <h1 class="h3 text-primary font-weight-normal mb-0">Bienvenido a  <span class="font-weight-semi-bold">Eatery</span></h1>
+                <p>Rellena el formulario para empezar.</p>
+              </div>
+              <!-- End Title -->
+
+              <!-- Form Group -->
+              <div class="js-form-message form-group">
+                  <label class="form-label" for="signupSrName">Nombre del Restaurante</label>
+                  <input type="text" class="form-control" v-model="User.name" name="name" id="signupSrName" minlength="3" placeholder="Restaurante" aria-label="Restaurante" required
+                         data-msg="Por favor ingresa un nombre valido."
+                         data-error-class="u-has-error"
+                         data-success-class="u-has-success">
+                </div>
+                <!-- End Form Group -->
+
+              <!-- Form Group -->
+              <div class="js-form-message form-group">
+                <label class="form-label" for="signupSrEmail">Correo Electronico</label>
+                <input type="email" class="form-control" v-model="User.email" name="email" id="signupSrEmail" placeholder="Correo Electronico" aria-label="Correo Electronico" required
+                       data-msg="Por favor ingresa un Correo Electronico valido."
+                       data-error-class="u-has-error"
+                       data-success-class="u-has-success"
+                       autocomplete="username">
+              </div>
+              <!-- End Form Group -->
+
+              <!-- Form Group -->
+              <div class="js-form-message form-group">
+                <label class="form-label" for="signupSrPassword">Contraseña</label>
+                <input type="password" minlength="6" class="form-control" v-model="User.password" name="password" id="signupSrPassword" placeholder="********" aria-label="********" required
+                       data-msg="Su contraseña es inválida. Inténtalo de nuevo."
+                       data-error-class="u-has-error"
+                       data-success-class="u-has-success"
+                       autocomplete="new-password">
+              </div>
+              <!-- End Form Group -->
+
+              <!-- Form Group -->
+              <div class="js-form-message form-group">
+                <label class="form-label" for="signupSrConfirmPassword">Confirmar contraseña</label>
+                <input type="password" minlength="6" class="form-control" name="confirmPassword" id="signupSrConfirmPassword"  placeholder="********" aria-label="********" required
+                      data-rule-equalto="#signupSrPassword"
+                      data-msg="La contraseña no coincide con la contraseña de confirmación."
+                      data-error-class="u-has-error"
+                      data-success-class="u-has-success"
+                      autocomplete="new-password">
+              </div>
+              <!-- End Form Group -->
+
+              <!-- Checkbox -->
+              <div class="js-form-message mb-5">
+                <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+                  <input type="checkbox" class="custom-control-input" id="termsCheckbox" name="termsCheckbox" required
+                         data-msg="Por favor acepte nuestros Términos y Condiciones."
+                         data-error-class="u-has-error"
+                         data-success-class="u-has-success">
+                  <label class="custom-control-label" for="termsCheckbox">
+                    <small>
+                      Estoy de acuerdo con los
+                      <a class="link-muted" href="#">Términos y Condiciones</a>
+                    </small>
+                  </label>
+                </div>
+              </div>
+              <!-- End Checkbox -->
+
+              <!-- Button -->
+              <div class="row align-items-center mb-5">
+                <div class="col-5 col-sm-6">
+                  <span class="small text-muted">¿Ya tienes una cuenta?</span>
+                  <a class="small" href="javascript:void(0);" @click="changeSignIn">Login</a>
+                </div>
+
+                <div class="col-7 col-sm-6 text-right">
+                  <button type="submit" class="btn btn-primary transition-3d-hover">Registrarce</button>
+                </div>
+              </div>
+              <!-- End Button -->
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Form -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+{% endblock %}
+{% block jsPlugins %}
+  <!-- JS Implementing Plugins -->
+  <script src="{{assets}}/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script src="{{assets}}/vendor/slick-carousel/slick/slick.js"></script>
+  <script src="{{assets}}/vendor/appear.js"></script>
+{% endblock %}
+{% block jsFront %}
+  <!-- JS Front -->  
+  <script src="{{assets}}/js/hs.core.js"></script>
+  <script src="{{assets}}/js/components/hs.validation.js"></script>
+  <script src="{{assets}}/js/components/hs.slick-carousel.js"></script>
+  <script src="{{assets}}/js/components/hs.show-animation.js"></script>  
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of slick carousel
+      $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+      // initialization of form validation
+      $.HSCore.components.HSValidation.init('.js-validate');
+  
+      $.HSCore.components.HSShowAnimation.init('[data-animation]');
+    });
+  </script>
 {% endblock %}
 {% block appScript %}
-  <script src="/src/appUsers.js"></script>
+<script src="/src/js/appAuthEmail.js"></script>
 {% endblock %}

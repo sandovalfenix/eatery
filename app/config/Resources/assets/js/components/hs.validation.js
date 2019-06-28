@@ -131,7 +131,7 @@ var isEmpty = function isEmpty(f) {
     },
 
     submitHandler: function (form) {
-      form.submit();
+      return false;
     }
   }
 })(jQuery);
