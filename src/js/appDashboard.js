@@ -57,9 +57,10 @@ const app = new Vue({
         });
       });
     },
-    update(id, collection, doc){
-      delete doc.id;
-      db.collection(collection).doc(id).update(doc)
+    update(id, collection, docData){
+      delete docData.id;
+      var Doc = Object.assign({},docData);
+      db.collection(collection).doc(id).update(Doc)
       .then(function() {
         app.alerts.push({
           type: 'alert-success',
@@ -118,6 +119,41 @@ const app = new Vue({
         this.pag.next = false;
         this.pag.pre = true;
       }
+    }, 
+    filesUpload(name, file, callback) {
+      storageRef.child('img/'+name+'.'+file.name.split(".")[1]).put(file).then(function(snapshot){
+        callback(snapshot.downloadURL);
+      }).catch(function(error) {
+        app.alerts.push({
+          type: 'alert-danger',
+          msj: 'Error: codigo '+error.code+': '+error.message,
+        });
+      });
+    },
+    filesUploadDeleted(name){
+      var desertRef = storageRef.child('img/'+name);
+      desertRef.delete();
+    },
+    createQR(formData, callback){
+      this.$http.post('/src/php/qrCode.php', formData).then(function(response){
+        callback(response.body);
+      }, function(error){
+        app.alerts.push({
+          type: 'alert-danger',
+          msj: 'Error: codigo '+error.code+': '+error.message,
+        });
+      });
+    },
+    print(html){
+      $('<iframe>', {name: 'frame',class: 'printFrame'})
+      .appendTo('body')
+      .contents().find('body')
+      .append(html);
+
+      window.frames['frame'].focus();
+      window.frames['frame'].print();
+
+      setTimeout(() => { $(".printFrame").remove(); }, 1000);      
     },
   },
   delimiters: ['([','])'],

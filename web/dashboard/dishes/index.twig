@@ -32,7 +32,8 @@
                 <li class="list-inline-item">
                   <a class="btn btn-sm btn-soft-primary" href="javascript:void(0)"
                     data-toggle="modal"
-                    data-target="#formDishModal">
+                    data-target="#formDishModal"
+                    @click="Dish=[]; file='';">
                     <span class="fas fa-plus"></span> Añadir
                   </a>
                 </li>
@@ -87,7 +88,7 @@
               <a class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" href="javascript:;"
                 data-toggle="modal"
                 data-target="#alertDeleteModal"
-                @click="deleteDish(Dish.id)">
+                @click="deleteDish(Dish.id, Dish.name)">
                 Borrar                  
                 <span class="fas fa-trash mr-1"></span>
               </a>
@@ -95,7 +96,7 @@
           </div>
           <!-- End Property Item -->
         </div>
-        <div v-else-if="filteredDishes == false && Dishes && search == ''" class="row">
+        <div v-else-if="filteredDishes == false && Dishes.length > 0 && search == ''" class="row">
           <!-- Property Item -->
           <div v-for="(Dish, index) in Dishes" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)" class="card mb-5 col-xl-3 col-md-4 col-sm-6 col-12 p-0 animated fadeInUp">
             <!-- Gallery -->
@@ -134,7 +135,7 @@
               <a class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" href="javascript:;"
                 data-toggle="modal"
                 data-target="#formDishModal"
-                @click="editDish(Dish.id)">
+                @click="editDish(Dish.id);">
                 Editar                  
                 <span class="fas fa-edit mr-1"></span>
               </a>

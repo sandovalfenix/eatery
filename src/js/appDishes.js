@@ -29,11 +29,9 @@ const appDishes = new Vue({
   methods:{
     addDish(){
       var errorList = $("#formDish").validate().errorList;
-      if($.isEmptyObject(errorList)){       
-        app.create("Dishes", this.Dish);
+      if($.isEmptyObject(errorList)){
+        app.create("Dishes", this.Dish);        
         $("#formDishModal").modal("hide");
-        this.Dish = [];   
-        this.file = '';
       }
     },
     newGroup(){
@@ -45,44 +43,38 @@ const appDishes = new Vue({
         this.Dish.group = $("#selectGroup").val();
       }
     },
-    editDish(id){
+    editDish(id){                    
+      this.file = []; 
       app.edit(id, "Dishes", function(data){
         appDishes.Dish = data;
       });
     },
     updateDish(id){
       var errorList = $("#formDish").validate().errorList;
-      if($.isEmptyObject(errorList)){
-        app.update(id, "Dishes", this.Dish);
-        $("#formDishModal").modal("hide");        
-        this.Dish = [];        
-        this.file = '';
-      }
+      if($.isEmptyObject(errorList)){        
+        app.update(id, "Dishes", this.Dish);  
+        $("#formDishModal").modal("hide");
+      }              
     },
-    deleteDish(id){
+    deleteDish(id, name){
       $("#deleted").on("click", function(){
         app.deleted(id, "Dishes");
+        this.Dish.name = name;        
+        deletedFileUpload();
         $("#alertDeleteModal").modal("hide");
       })
-    },
-    sendFile() {
-      var formData = new FormData();
-      formData.append("photoURL", this.file);
-      this.$http.post('/src/php/filesUpload.php', formData).then(function(response){
-        if(response.body.success){
-          appDishes.Dish.photoURL = response.body.photoURL;
-        }
-      }, function(error){
-        app.alert.push({
-          type: 'alert-danger',
-          msj: 'Error: codigo '+error.code+': '+error.message,
-        });
-      });  
     },
     handleFileUpload(){
       this.file = this.$refs.file.files[0];
       this.file.photoURL = URL.createObjectURL(this.file);
-      this.sendFile();
+                         
+      app.filesUpload(this.Dish.name, this.file, function(dataURL){
+        appDishes.Dish.photoURL = dataURL;
+      }); 
+    },
+    deletedFileUpload(){
+      app.filesUploadDeleted(this.Dish.name);      
+      this.file = []; 
     }
   },
   delimiters: ['([','])'],

@@ -289,18 +289,8 @@
   <script src="{{assets}}/js/components/hs.show-animation.js"></script>  
 
   <!-- JS Plugins Init. -->
-  <script>
-    $(document).on('ready', function () {
-      // initialization of slick carousel
-      $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
-
-      // initialization of form validation
-      $.HSCore.components.HSValidation.init('.js-validate');
-  
-      $.HSCore.components.HSShowAnimation.init('[data-animation]');
-    });
-  </script>
+  <script src="{{assets}}/js/main.js"></script>
 {% endblock %}
 {% block appScript %}
-<script src="/src/js/appAuthEmail.js"></script>
+  <script src="/src/js/appAuthEmail.js"></script>
 {% endblock %}

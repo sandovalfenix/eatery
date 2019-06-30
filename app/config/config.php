@@ -6,7 +6,7 @@ class Config{
 
 	private $loader;
 	private $twig;
-	private $assets = array('assets' => '/app/config/Resources/assets');
+	private $assets = array('assets' => '/web/assets');
 
 	function __construct(){
 		$this->loader = new \Twig\Loader\FilesystemLoader(

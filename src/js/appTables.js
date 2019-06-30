@@ -3,6 +3,7 @@ const appTables = new Vue({
   data:{
     Tables: [],
     Table: [],
+    qrCodeURL:'javascript:void(0)',
   },
   methods:{
     addTable(){
@@ -37,6 +38,23 @@ const appTables = new Vue({
         $("#alertDeleteModal").modal("hide");
       })
     },
+    createQRTable(id){      
+      var url = window.location.href
+      var array = url.split("/");
+      
+      var formData = new FormData();
+      formData.append("codeContents", array[0] + "//" + array[2]+"/"+"orders/"+id);
+      formData.append("id", id);
+      app.createQR(formData, function(data){
+        if(data.success){
+          appTables.qrCodeURL = data.qrCodeURL;
+          $('#qrCode').attr("src",data.qrCodeURL);
+        }else{
+          appTables.qrCodeURL = false;
+        }
+      });      
+      $("#qrCodeTableModal").modal("show");
+    }
   },
   delimiters: ['([','])'],
 });

@@ -32,11 +32,10 @@ const appWaiters = new Vue({
         if($.isEmptyObject(errorList)){       
           app.create("Waiters", this.Waiter);
           $("#formWaiterModal").modal("hide");
-          this.Waiter = [];   
-          this.file = '';
         }
       },
-      editWaiter(id){
+      editWaiter(id){              
+        this.file = []; 
         app.edit(id, "Waiters", function(data){
           appWaiters.Waiter = data;
         });
@@ -45,35 +44,28 @@ const appWaiters = new Vue({
         var errorList = $("#formWaiter").validate().errorList;
         if($.isEmptyObject(errorList)){
           app.update(id, "Waiters", this.Waiter);
-          $("#formWaiterModal").modal("hide");        
-          this.Waiter = [];        
-          this.file = '';
+          $("#formWaiterModal").modal("hide"); 
         }
       },
-      deleteWaiter(id){
+      deleteWaiter(id, name){
         $("#deleted").on("click", function(){
-          app.deleted(id, "Waiters");
+          app.deleted(id, "Waiters");          
+          this.Waiter.name = name;        
+          deletedFileUpload();
           $("#alertDeleteModal").modal("hide");
         })
-      },
-      sendFile() {
-        var formData = new FormData();
-        formData.append("photoURL", this.file);
-        this.$http.post('/src/php/filesUpload.php', formData).then(function(response){
-          if(response.body.success){
-            appWaiters.Waiter.photoURL = response.body.photoURL;
-          }
-        }, function(error){
-          app.alert.push({
-            type: 'alert-danger',
-            msj: 'Error: codigo '+error.code+': '+error.message,
-          });
-        });  
       },
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
         this.file.photoURL = URL.createObjectURL(this.file);
-        this.sendFile();
+                           
+        app.filesUpload(this.Waiter.name, this.file, function(dataURL){
+          appWaiters.Waiter.photoURL = dataURL;
+        }); 
+      },
+      deletedFileUpload(){
+        app.filesUploadDeleted(this.Waiter.name);      
+        this.file = []; 
       }
     },
     delimiters: ['([','])'],

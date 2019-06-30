@@ -76,7 +76,7 @@
 
                       <h3 class="h4 text-white mb-2">([Table.name])</h3> 
                     </a>
-                    <a href="javascript:void(0)" class="h2 text-white"><i class="fas fa-qrcode"></i></a>
+                    <a href="javascript:void(0)" class="h2 text-white" data-toggle="tooltip" data-placement="top" title="Generar QR Code" @click="createQRTable(Table.id)"><i class="fas fa-qrcode"></i></a>
                   </article>
                   <!-- End Blog Card -->
                 </div>
@@ -89,10 +89,11 @@
               </div>
               <!-- End Projects -->
               {% include "/tables/formTables.twig" %}
+              {% include "/tables/qrCodeTable.twig" %}
             </div>
           </div>
           <!-- Title -->
-          <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="d-flex justify-content-between align-items-center my-4">
             <h3 class="h6 mb-0">Sus fuentes de ingresos</h3>
           </div>
           <!-- End Title -->
@@ -476,6 +477,6 @@
 {% endblock %}
 
 {% block appScript %}
-  <script src="/src/js/appDashboardHome.js"></script>
+<script src="/src/js/appDashboardHome.js"></script>
   <script src="/src/js/appTables.js"></script>
 {% endblock %}
