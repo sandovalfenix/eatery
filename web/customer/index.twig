@@ -1,0 +1,49 @@
+{% extends "dashboard_layout.twig" %}
+{% block title %}Cliente{% endblock %}
+{% block container %}
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+    <!-- Content Section -->
+    <div class="bg-light">
+      <div class="container space-3 space-lg-4">
+        <div class="row">
+          <div
+            class="col-md-12 mb-3 mb-md-0">
+            <!-- Process -->
+            <div class="text-center">
+              <div class="position-relative">
+                  <div
+                    class="svg-preloader min-height-155 mt-2" id="SVGcircleProcess1">
+                    <!-- Icon -->
+                    <span class="btn btn-lg btn-icon mt-4">
+                      <span class="fas fa-concierge-bell fa-3x btn-icon__inner btn-icon__inner-bottom-minus"></span>
+                    </span>
+                    <!-- End Icon -->
+                    <!-- SVG Shape -->
+                    <figure class="w-100 position-absolute top-0 right-0 left-0 z-index-2">
+                      <img alt="Image Description" class="js-svg-injector" data-parent="#SVGcircleProcess1" src="{{assets}}/svg/components/circle-process-1.svg">
+                    </figure>
+                    <!-- End SVG Shape -->
+                  </div>
+              </div>
+              <h3 class="h5">Solicita tu Pedido</h3>
+              <p class="mb-5 font-size-1">Haz clic en el boton "Escanear Codigo QR" para leer el codigo de la mesa y comienza a realizar tu pedido</p>
+              <a href="/scannerQR" class="btn btn-soft-primary transition-3d-hover"><i class="fas fa-qrcode mr-1"></i> Escanear Codigo QR</a>
+            </div>
+            <!-- End Process -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+{% endblock %}
+{% block footer %}{% endblock %}
+{% block appScript %}
+  <script>
+      firebase.auth().signInAnonymously()
+  </script>
+  <script src="/src/js/appDashboardHome.js"></script>
+  <script src="/src/js/appOrders.js"></script>
+{% endblock %}

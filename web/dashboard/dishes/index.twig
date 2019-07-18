@@ -8,7 +8,7 @@
 {% block container %}
 <main id="appDishes">
   <div class="bg-light animated fadeIn slow delay-2s">
-    <div class="container space-2">
+    <div class="container space-3 space-lg-4">
       <div class="row justify-content-between align-items-center mb-4">
           <!-- Title -->
           <div class="col-sm-4 col-md-6 mb-3 mb-sm-0">
@@ -62,7 +62,7 @@
             <div class="card-body p-4">
               <!-- Posted Info -->
               <div class="media align-items-center pb-3">
-                <div class="media-body">                         
+                <div class="media-body">
                   <b class="d-block">([Dish.name])</b>
                 </div>
               </div>
@@ -75,21 +75,21 @@
                 </div>
               </div>
               <!-- End Posted Info -->
-            </div>            
+            </div>
             <!-- Contacts -->
             <div class="card-footer d-flex align-items-center font-size-1 mx-auto">
               <a class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" href="javascript:;"
                 data-toggle="modal"
                 data-target="#formDishModal"
                 @click="editDish(Dish.id)">
-                Editar                  
+                Editar
                 <span class="fas fa-edit mr-1"></span>
               </a>
               <a class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" href="javascript:;"
                 data-toggle="modal"
                 data-target="#alertDeleteModal"
                 @click="deleteDish(Dish.id, Dish.name)">
-                Borrar                  
+                Borrar
                 <span class="fas fa-trash mr-1"></span>
               </a>
             </div>
@@ -116,7 +116,7 @@
             <div class="card-body p-4">
               <!-- Posted Info -->
               <div class="media align-items-center pb-3">
-                <div class="media-body">                         
+                <div class="media-body">
                   <b class="d-block">([Dish.name])</b>
                 </div>
               </div>
@@ -129,21 +129,21 @@
                 </div>
               </div>
               <!-- End Posted Info -->
-            </div>            
+            </div>
             <!-- Contacts -->
             <div class="card-footer d-flex align-items-center font-size-1 mx-auto">
               <a class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" href="javascript:;"
                 data-toggle="modal"
                 data-target="#formDishModal"
                 @click="editDish(Dish.id);">
-                Editar                  
+                Editar
                 <span class="fas fa-edit mr-1"></span>
               </a>
               <a class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" href="javascript:;"
                 data-toggle="modal"
                 data-target="#alertDeleteModal"
                 @click="deleteDish(Dish.id)">
-                Borrar                  
+                Borrar
                 <span class="fas fa-trash mr-1"></span>
               </a>
             </div>
@@ -171,7 +171,7 @@
                     <span class="sr-only">Anterior</span>
                 </a>
                 </li>
-                <li id="page-1" class="page-item active"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(1)">1</a></li>              
+                <li id="page-1" class="page-item active"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(1)">1</a></li>
                 <li v-for="index in pag.numPages" v-show="index > 1" :id="'page-'+index" class="page-item"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(index)">([index])</a></li>
                 <li v-for="index in pag.numPages" v-show="index > 5" class="page-item disabled"><a class="page-link" href="javascript:void(0)">...</a></li>
                 <li class="page-item">

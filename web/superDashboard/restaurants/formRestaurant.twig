@@ -1,0 +1,175 @@
+<!-- Rstaurants Modal Window -->
+<div class="modal fade" id="formRestaurantModal" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="formRestaurantModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formRestaurantModalLabel"
+          v-if="Restaurant.id">Editar Restaurante</h5>
+        <h5 class="modal-title" id="formRestaurantModalLabel"
+          v-else>Nuevo Restaurante</h5>
+        <button class="close" type="button" aria-label="Close"
+          data-dismiss="modal"
+          @click="Restaurant = [];file = false;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="js-validate" id="formRestaurant">
+        <div class="modal-body">
+          <div class="card-body p-5">
+            <div class="row">
+              <!-- Input -->
+              <div class="col-sm-12 mb-3">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Nombre Restaurante
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="form-control" name="name" type="text" minlength="3" placeholder="Restaurante" aria-label="Restaurante"
+                    v-model="Restaurant.name"
+                    data-error-class="u-has-error"
+                    data-msg="Por favor ingrese un nombre valido."
+                    data-success-class="u-has-success" required>
+                </div>
+              </div>
+              <!-- End Input -->
+              <!-- Input -->
+              <div class="col-sm-12 mb-3">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Ubicacion
+                  </label>
+                  <input class="form-control" name="location" type="text" minlength="6" placeholder="País - Departamento - Ciudad" aria-label="Ubicacion"
+                    v-model="Restaurant.location"
+                    data-error-class="u-has-error"
+                    data-msg="Por favor ingrese una ubicacion valida."
+                    data-success-class="u-has-success">
+                </div>
+              </div>
+              <!-- End Input -->
+              <!-- Input -->
+              <div class="col-sm-12 mb-3">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Direccion
+                  </label>
+                  <input class="form-control" name="address" type="text" minlength="6" placeholder="Cr 00 Cl 00 #00-00" aria-label="Direccion"
+                    v-model="Restaurant.address"
+                    data-error-class="u-has-error"
+                    data-msg="Por favor ingrese una Direccion valida."
+                    data-success-class="u-has-success">
+                </div>
+              </div>
+              <!-- End Input -->
+              <!-- Input -->
+              <div class="col-sm-12 mb-3">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Telefono
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="form-control" name="phone" type="phone" minlength="6" placeholder="Telefono" aria-label="Telefono"
+                    v-model="Restaurant.phone"
+                    data-error-class="u-has-error"
+                    data-msg="Por favor ingrese un telefono valido."
+                    data-success-class="u-has-success" required>
+                </div>
+              </div>
+              <!-- End Input -->
+              <!-- Input -->
+              <div class="col-sm-12 mb-3">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Correo
+                    <span class="text-danger">*</span>
+                  </label>
+                  <div class="input-group">
+                    <input class="form-control" name="email" type="email" placeholder="Correo Electronico" aria-label="Correo"
+                      v-model="Restaurant.email"
+                      data-error-class="u-has-error"
+                      data-msg="Por favor ingresa un correo valido."
+                      data-success-class="u-has-success" required>
+                  </div>
+                </div>
+              </div>
+              <!-- End Input -->
+              <!-- Input -->
+              <div class="col-sm-12 mb-3"
+                v-show="Restaurant.phone">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Contraseña
+                  </label>
+                  <div class="input-group">
+                    <input class="form-control" name="password" type="text" aria-label="Contraseña"
+                      v-model="Restaurant.password = Restaurant.phone" disabled>
+                  </div>
+                </div>
+              </div>
+              <!-- End Input -->
+              <div class="w-100"></div>
+            </div>
+            <div class="row">
+              <!-- Input -->
+              <div class="col-sm-12 mb-6 text-center">
+                <div class="js-form-message">
+                  <!-- Update Avatar Form -->
+                  <div class="mx-auto mb-6"
+                    v-if="file.photoURL">
+                    <img class="img-fluid rounded" alt="Image Description"
+                      :src="file.photoURL">
+                  </div>
+                  <div class="mx-auto mb-6"
+                    v-else-if="Restaurant.photoURL">
+                    <img class="img-fluid rounded" alt="Image Description"
+                      :src="Restaurant.photoURL">
+                  </div>
+                  <div class="media-body">
+                    <label class="btn btn-sm btn-primary transition-3d-hover file-attachment-btn mb-1 mb-sm-0 mr-1" for="file">
+                      Subir nueva imagen
+                      <input class="file-attachment-btn__label" id="file" name="file-attachment" type="file"
+                       @change="handleFileUpload" ref="file">
+                    </label>
+                    <a class="btn btn-sm btn-soft-secondary transition-3d-hover mb-1 mb-sm-0" href="javascript:void(0)"
+                     @click="deletedFileUpload">Borrar</a>
+                  </div>
+                </div>
+              </div>
+              <!-- End Input -->
+            </div>
+            <div class="row">
+              <!-- Input -->
+              <div class="col-sm-12 mb-6">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Descripcion
+                  </label>
+                  <div class="input-group">
+                    <textarea class="form-control" name="description" placeholder="Escribe aqui la descripcion de tu Restaurante..." aria-label="Escribe aqui la descripcion de tu Restaurante..."
+                      v-model="Restaurant.description"
+                      data-error-class="u-has-error"
+                      data-msg="Por favor ingrese una descripcion."
+                      data-success-class="u-has-success" rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- End Input -->
+            </div>
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" type="button"
+          data-dismiss="modal">Cancelar</button>
+          <button class="btn btn-sm btn-warning transition-3d-hover" type="submit"
+            v-if="Restaurant.id"
+            @click="updateRestaurant(Restaurant.id)">Editar Restaurante</button>
+          <button class="btn btn-sm btn-primary transition-3d-hover" type="submit"
+            v-else
+            @click="addRestaurant">Añadir Restaurante</button>
+        </div>
+        <!-- End Buttons -->
+      </form>
+    </div>
+  </div>
+  <!-- End Rstaurants Modal Window -->
+</div>

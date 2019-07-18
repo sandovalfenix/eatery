@@ -1,5 +1,5 @@
-const appDishes = new Vue({
-  el: "#appDishes",
+const appOrders = new Vue({
+  el: "#appOrders",
   data: {
     Dishes: [],
     Dish: [],
@@ -28,7 +28,7 @@ const appDishes = new Vue({
   },
   methods: {
     addDish() {
-      if ($("#formDish").valid()) {
+      if($("#formDish").valid()) {
         app.create("Dishes", this.Dish);
         $("#formDishModal").modal("hide");
       }
@@ -45,11 +45,11 @@ const appDishes = new Vue({
     editDish(id) {
       this.file = [];
       app.edit(id, "Dishes", function (data) {
-        appDishes.Dish = data;
+        appOrders.Dish = data;
       });
     },
     updateDish(id) {
-      if ($("#formDish").valid()) {
+      if($("#formDish").valid()) {
         app.update(id, "Dishes", this.Dish);
         $("#formDishModal").modal("hide");
       }
@@ -67,7 +67,7 @@ const appDishes = new Vue({
       this.file.photoURL = URL.createObjectURL(this.file);
 
       app.filesUpload(this.Dish.name, this.file, function (dataURL) {
-        appDishes.Dish.photoURL = dataURL;
+        appOrders.Dish.photoURL = dataURL;
       });
     },
     deletedFileUpload() {
@@ -81,7 +81,7 @@ const appDishes = new Vue({
 onSnapshot(
   db.collection("Dishes")
     .orderBy("name", "asc"), function (data) {
-      appDishes.Dishes = data;
+      appOrders.Dishes = data;
       app.pagination(data.length, 4);
     }
 );

@@ -97,17 +97,6 @@ span#textLoader {
   color: #e7e6e6;
 }
 
-.loader:before {
-    /* content: ''; */
-    /* display: block; */
-    /* position: fixed; */
-    /* top: 0; */
-    /* left: 0; */
-    /* width: 100%; */
-    /* height: 100%; */
-    /* background: #f7f5f5; */
-}
-
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
@@ -5290,6 +5279,13 @@ a.badge-indigo:focus, a.badge-indigo.focus {
   border-radius: 0.3125rem;
 }
 
+.alert-fixed-bottom {
+  position: fixed;
+  right: 0;
+  z-index: 9999;
+  bottom: 5%;
+}
+
 .alert-heading {
   color: inherit;
 }
@@ -6670,15 +6666,15 @@ a.close.disabled {
 }
 
 .spinner-border {
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
+  position: fixed;
+  width: 8rem;
+  height: 8rem;
   vertical-align: text-bottom;
-  border: 0.25em solid currentColor;
+  border: 0.35em solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
   -webkit-animation: spinner-border .75s linear infinite;
-          animation: spinner-border .75s linear infinite;
+  animation: spinner-border .75s linear infinite;
 }
 
 .spinner-border-sm {
@@ -20300,14 +20296,14 @@ label.btn {
   Page Preloader
 ------------------------------------*/
 .page-preloader {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1002;
+  z-index: 9999;
   background-color: #fff;
 }
 
@@ -20315,9 +20311,9 @@ label.btn {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
-      justify-content: center;
+  justify-content: center;
   -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   height: 100%;
 }
 
@@ -20450,7 +20446,6 @@ label.btn {
 .nav-icon-action {
   position: relative;
   display: block;
-  vertical-align: middle;
   text-align: center;
   z-index: 1;
   line-height: 0.7;

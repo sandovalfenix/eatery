@@ -1,10 +1,11 @@
 $(window).on('load', function () {
   // Page preloader
-  setTimeout(function() {    
-    $('#textLoader').html("Bienvenido");
+  setTimeout(function() {
     $('#jsPreloader').fadeOut(500, function () {
-      $('[data-toggle="tooltip"]').tooltip();    
-      $(this).remove(); 
+      $('[data-toggle="tooltip"]').tooltip();
+      $('[data-toggle="popover"]').popover();
+      $('body').removeClass('overflow-hidden');
+      $(this).remove();
     });
   }, 1000);
 
@@ -28,8 +29,8 @@ $(window).on('load', function () {
   $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
 });
 
-$(document).on('ready', function (){  
-  
+$(document).on('ready', function (){
+
   // initialization of header
   $.HSCore.components.HSHeader.init($('#header'));
 
@@ -85,4 +86,5 @@ $(document).on('ready', function (){
 
   // initialization of popups
   $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
 });

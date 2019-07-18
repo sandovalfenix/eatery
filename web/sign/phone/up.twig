@@ -1,0 +1,98 @@
+<form
+  class="js-validate my-5" v-show="signIn == false">
+
+  <!-- Title -->
+  <div class="mb-4">
+    <h1 class="h3 text-primary font-weight-normal mb-0">Bienvenido a
+      <span class="font-weight-semi-bold">Eatery</span>
+    </h1>
+    <p>Rellena el formulario para empezar.</p>
+  </div>
+  <!-- End Title -->
+  <!-- Form Group -->
+  <div
+    class="js-form-message form-group" id="step1Up">
+
+    <!-- Form Group -->
+    <div class="js-form-message form-group">
+      <label class="form-label" for="signupSrName">Nombre</label>
+      <input aria-label="Restaurante" class="form-control" data-error-class="u-has-error" data-msg="Por favor ingresa un nombre valido." data-success-class="u-has-success" id="signupSrName" minlength="3" name="name" placeholder="Nombre Completo" required type="text" v-model="UserAuth.name">
+    </div>
+
+    <div class="mb-2">
+      <label class="h6 small d-block text-uppercase mb-2">
+        Seleccione un Pais
+      </label>
+      <div class="input-group">
+        <select class="mb-3 form-control" title="Selecciona un Pais" v-model="UserAuth.dialCode">
+          <option :value="'+'+Country.callingCodes" v-for="(Country, index) in Countries">([Country.name+' (+'+Country.callingCodes+')'])</option>
+
+        </select>
+      </div>
+      <!-- End Select -->
+    </div>
+
+    <!-- Input Group -->
+    <label class="h6 small d-block text-uppercase mb-2">
+      Numero de Telefono
+    </label>
+    <div class="js-form-message js-focus-state">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">([UserAuth.dialCode])</span>
+        </div>
+        <input aria-describedby="phoneNumber" aria-label="Numero de Telefono" class="form-control" data-error-class="u-has-error" data-msg="Por gavor ingresa un numero de Telefono valido." data-success-class="u-has-success" id="phoneNumberUp" placeholder="Numero de Telefono" required type="phone" v-modal="UserAuth.phoneNumber">
+      </div>
+    </div>
+    <!-- End Input Group -->
+
+  </div>
+  <!-- End Form Group -->
+  <!-- Form Group -->
+  <div
+    class="js-form-message form-group d-none" id="step2Up">
+    <!-- Input Group -->
+    <label class="h6 small d-block text-uppercase mb-2">
+      Codigo de Verificacion
+    </label>
+    <div class="js-form-message js-focus-state">
+      <input aria-describedby="codeVerify" aria-label="Codigo" class="form-control" data-error-class="u-has-error" data-msg="Por gavor ingresa un Codigo valido." data-success-class="u-has-success" id="signupSrCodeVerify" minlength="6" placeholder="Codigo" required type="text">
+    </div>
+    <!-- End Input Group -->
+
+    <!-- Checkbox -->
+    <div class="js-form-message mb-5">
+      <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+        <input class="custom-control-input" data-error-class="u-has-error" data-msg="Por favor acepte nuestros Términos y Condiciones." data-success-class="u-has-success" id="termsCheckbox" name="termsCheckbox" required type="checkbox">
+        <label class="custom-control-label" for="termsCheckbox">
+          <small>
+            Estoy de acuerdo con los
+            <a class="link-muted" href="#">Términos y Condiciones</a>
+          </small>
+        </label>
+      </div>
+    </div>
+    <!-- End Checkbox -->
+
+  </div>
+  <!-- End Form Group -->
+
+  <!-- Button -->
+  <div class="row align-items-center">
+    <div class="col-5 col-sm-6">
+      <span class="small text-muted">¿Ya tienes una cuenta?</span>
+      <a @click="changeSignIn" class="small" href="javascript:void(0);">Login</a>
+    </div>
+
+    <div class="col-6 text-right" id="nextStepUp">
+      <button @click="signUpPhone" class="btn btn-primary transition-3d-hover">Siguiente</button>
+    </div>
+
+    <input class="d-none" id="reCaptcha">
+
+    <div class="col-6 text-right d-none" id="submitUp">
+      <button class="btn btn-primary transition-3d-hover" type="submit">Registrarce</button>
+    </div>
+  </div>
+  <!-- End Button -->
+</form>

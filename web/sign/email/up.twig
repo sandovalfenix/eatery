@@ -1,0 +1,56 @@
+<form
+@submit="signUp" class="js-validate my-5" id="signUp" v-show="signInShow == false">
+
+  <!-- Title -->
+  <div class="mb-4">
+    <h1 class="h3 text-primary font-weight-normal mb-0">Bienvenido a
+      <span class="font-weight-semi-bold">Eatery</span>
+    </h1>
+    <p>Rellena el formulario para empezar.</p>
+  </div>
+  <!-- End Title -->
+
+  <!-- Form Group -->
+  <div class="js-form-message form-group">
+    <label class="form-label" for="signupSrName">Nombre</label>
+    <input aria-label="Restaurante" class="form-control" data-error-class="u-has-error" data-msg="Por favor ingresa un nombre valido." data-success-class="u-has-success" id="signupSrName" minlength="3" name="name" placeholder="Nombre Completo" required type="text" v-model="UserAuth.name">
+  </div>
+  <div class="js-form-message form-group">
+    <label class="form-label" for="signupSrEmail">Correo Electronico</label>
+    <input aria-label="Correo Electronico" autocomplete="username" class="form-control" data-error-class="u-has-error" data-msg="Por favor ingresa un Correo Electronico valido." data-success-class="u-has-success" id="signupSrEmail" name="email" placeholder="Correo Electronico" required type="email" v-model="UserAuth.email">
+  </div>
+  <div class="js-form-message form-group">
+    <label class="form-label" for="signupSrPassword">Contraseña</label>
+    <input aria-label="********" autocomplete="new-password" class="form-control" data-error-class="u-has-error" data-msg="Su contraseña es inválida. Inténtalo de nuevo." data-success-class="u-has-success" id="signupSrPassword" minlength="6" name="password" placeholder="********" required type="password" v-model="UserAuth.password">
+  </div>
+  <div class="js-form-message form-group">
+    <label class="form-label" for="signupSrConfirmPassword">Confirmar contraseña</label>
+    <input aria-label="********" autocomplete="new-password" class="form-control" data-error-class="u-has-error" data-msg="La contraseña no coincide con la contraseña de confirmación." data-rule-equalto="#signupSrPassword" data-success-class="u-has-success" id="signupSrConfirmPassword" minlength="6" name="confirmPassword" placeholder="********" required type="password">
+  </div>
+  <!-- End Form Group -->
+  <!-- Checkbox -->
+  <div class="js-form-message mb-5">
+    <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+      <input class="custom-control-input" data-error-class="u-has-error" data-msg="Por favor acepte nuestros Términos y Condiciones." data-success-class="u-has-success" id="termsCheckbox" name="termsCheckbox" required type="checkbox">
+      <label class="custom-control-label" for="termsCheckbox">
+        <small>
+          Estoy de acuerdo con los
+          <a class="link-muted" href="#">Términos y Condiciones</a>
+        </small>
+      </label>
+    </div>
+  </div>
+  <!-- End Checkbox -->
+  <!-- Button -->
+  <div class="row align-items-center">
+    <div class="col-5 col-sm-6">
+      <span class="small text-muted">¿Ya tienes una cuenta?</span>
+      <a @click="changeSignIn" class="small" href="javascript:void(0);">Login</a>
+    </div>
+
+    <div class="col-7 col-sm-6 text-right">
+      <button class="btn btn-primary transition-3d-hover" type="submit">Registrarce</button>
+    </div>
+  </div>
+  <!-- End Button -->
+</form>
