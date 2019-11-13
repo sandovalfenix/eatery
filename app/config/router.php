@@ -16,7 +16,7 @@ class Router extends Config{
       $this->render($request->getRender()."/index.twig");
 		}elseif(file_exists($path.dirname($request->getRender())."/index.twig")){
       $this->render(dirname($request->getRender())."/index.twig", array(
-        'id' => basename($request->getRender()),
+        'param' => basename($request->getRender()),
       ));
 		}elseif(empty($request->getRender())){
 			$this->render("/home/index.twig");

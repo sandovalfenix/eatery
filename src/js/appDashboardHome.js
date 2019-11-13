@@ -7,10 +7,10 @@ const appDashboardHome = new Vue({
   delimiters: ['([','])'],
 });
 
-onSnapshot(db.collection("Dishes"), function(data){
+onSnapshot("Dishes", false, function(data){
 	appDashboardHome.dishesLength = data.length;
 });
 
-onSnapshot(db.collection("Waiters"), function(data){
+onSnapshot("Waiters", false, function(data){
 	appDashboardHome.waitersLength = data.length;
 });

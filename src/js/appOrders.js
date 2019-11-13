@@ -1,27 +1,27 @@
 const appOrders = new Vue({
   el: "#appOrders",
   data: {
-    Dishes: [],
-    Dish: [],
-    file: [],
-    pag: app.pag,
+    Dishes: false,
+    Dish: false,
+    file: false,
     search: '',
+    Restaurant: false,
+  },
+  created() {
+    app.Restaurant = $('#appOrders').attr('data-ref').split("_")[0];
   },
   computed: {
     filteredDishes() {
       if (this.search) {
-        app.pagActive(1);
         var Dishes = this.Dishes.filter((dish) => {
           return dish.name.toLowerCase().match(this.search);
         });
         if (Dishes.length > 0) {
-          app.pagination(Dishes.length, 4);
           return Dishes;
         } else {
           return false
         }
       } else {
-        app.pagination(this.Dishes.length, 4);
         return false;
       }
     }
@@ -77,14 +77,19 @@ const appOrders = new Vue({
   },
   delimiters: ['([', '])'],
 });
-
-onSnapshot(
-  db.collection("Dishes")
-    .orderBy("name", "asc"), function (data) {
+onSnapshot("Dishes",["name", "asc"], function (data) {
       appOrders.Dishes = data;
-      app.pagination(data.length, 4);
     }
 );
+collectionRef = db.collection("Restaurants").doc(app.Restaurant);
+collectionRef.get().then(function (doc) {
+  if (doc.exists) {
+    var data = doc.data();
+    data.id = doc.id;
+    appOrders.Restaurant = data;
+  }
+});
+
 
 
 

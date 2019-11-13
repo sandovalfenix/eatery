@@ -3,15 +3,14 @@
 {% endblock %}
 {% block container %}
   <!-- ========== MAIN ========== -->
-  <main
-    id="content" role="main">
+  <main id="content" role="main">
     <!-- Content Section -->
     <div class="bg-light">
-      <div class="container space-3 space-lg-4">
-        <div
-          class="row" id="appOrders">
+      <div class="container-fluid px-3 py-10" id="appOrders" data-ref="{{param}}">
+      <h4 class="my-3 text-center">Menu ([Restaurant.name])</h4>
+        <div class="row">
           <!-- Filter -->
-          <div class="col-sm-12 col-md-6 text-sm-right">
+          {# <div class="col-12 text-sm-right">
             <ul class="list-inline mb-0">
               <li class="list-inline-item mb-3" v-if="Dishes">
                 <div class="input-group input-group-sm">
@@ -20,191 +19,215 @@
                       <span class="fas fa-search"></span>
                     </span>
                   </div>
-                  <input class="form-control border-0" placeholder="Buscar" type="text" v-model="search">
+                  <input class="form-control border-0" type="text" placeholder="Buscar" v-model="search">
                 </div>
               </li>
             </ul>
-          </div>
+          </div> #}
           <!-- End Filter -->
-          <div class="col-sm-12 col-md-6 my-7">
-            <div
-              class="row" v-if="filteredDishes">
-              <!-- Property Item -->
-              <div
-                class="card mb-5 col-xl-3 col-md-4 col-sm-6 col-12 p-0 animated fadeInUp" v-for="(Dish, index) in filteredDishes" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)">
-                <!-- Gallery -->
-                <img :src="Dish.photoURL" alt="Image Description" class="card-img-top w-100" v-if="Dish.photoURL">
-                <img class="card-img-top w-65 mx-auto" src="https://image.flaticon.com/icons/svg/1847/1847172.svg" v-else width="Image Description">
-                <div class="position-absolute top-0 left-0 pt-2 pl-3">
-                  <span class="badge badge-success">
-                    <b>Grupo:</b>
-                    ([Dish.group])</span>
+          <div class="col-12 my-3 px-1" id="paymentDetails">
+            <!-- Accordion -->
+            <div class="accordion" v-if="filteredDishes">
+              <!-- Card -->
+              <div class="card" v-for="(Dish, index) in filteredDishes">
+
+                <div class="card-header card-collapse" :id="'cardHeading'+index">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link btn-block card-btn collapsed p-2" role="button" aria-controls="card" aria-expanded="false" :data-target="'#card'+index" data-toggle="collapse">
+                      <span class="row align-items-center">
+                        <span class="col-6 mb-2 mb-md-0">
+                          <span class="media align-items-center">
+                            <img class="max-width-10 mr-3 rounded" :src="Dish.photoURL">
+                            <span class="media-body">
+                              <span class="h5">([Dish.name])</span><br>
+
+                              <span class="badge badge-success">
+                                <b>Grupo:</b>
+                                ([Dish.group])</span>
+                            </span>
+                          </span>
+                        </span>
+                        <span class="col-10 text-center">
+                          <div class="bg-dark rounded">
+                            <h2 class="h5 text-white mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                          </div>
+                        </span>
+                        <span class="col-2 text-right">
+                          <span class="card-btn-arrow">
+                            <span class="fas fa-arrow-down small"></span>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                  </h5>
                 </div>
-                <div class="position-absolute top-0 right-0 py-2 px-3">
-                  <div class="row justify-content-between align-items-center">
-                    <div class="col-12 bg-dark rounded-left">
-                      <h2 class="h5 text-white mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                <div class="collapse" aria-labelledby="cardHeadingOne" :id="'card'+index" data-parent="#paymentDetails">
+                  <div class="card-body px-4">
+                    <!-- Card Details -->
+                    <div class="row">
+                      <!-- Gallery -->
+                      <img class="card-img-top w-100 h-100" v-if="Dish.photoURL" :src="Dish.photoURL">
+                      <img class="card-img-top w-65 mx-auto" src="https://image.flaticon.com/icons/svg/1847/1847172.svg" v-else width="Image Description">
+                      <!-- End Gallery -->
+                      <div class="card-body p-4">
+                        <!-- Posted Info -->
+                        <div class="media align-items-center pb-3">
+                          <div class="media-body">
+                            <b class="d-block">([Dish.name])</b>
+                            <h2 class="h5 mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                          </div>
+                        </div>
+                        <!-- End Posted Info -->
+                        <!-- Posted Info -->
+                        <div class="media align-items-center border-top py-3 mb-3">
+                          <div class="media-body">
+                            <small class="d-block text-muted">
+                              <b>Descripcion:</b>
+                            </small>
+                            <small class="d-block">([Dish.description])</small>
+                          </div>
+                        </div>
+                        <!-- End Posted Info -->
+                      </div>
+                      <!-- Contacts -->
+
                     </div>
+                    <!-- End Card Details -->
                   </div>
                 </div>
-                <!-- End Gallery -->
-                <div
-                  class="card-body p-4">
-                  <!-- Posted Info -->
-                  <div class="media align-items-center pb-3">
-                    <div class="media-body">
-                      <b class="d-block">([Dish.name])</b>
-                    </div>
-                  </div>
-                  <!-- End Posted Info -->
-                  <!-- Posted Info -->
-                  <div class="media align-items-center border-top py-3 mb-3">
-                    <div class="media-body">
-                      <small class="d-block text-muted">
-                        <b>Descripcion:</b>
-                      </small>
-                      <small class="d-block">([Dish.description])</small>
-                    </div>
-                  </div>
-                  <!-- End Posted Info -->
+
+              </div>
+              <!-- End Card -->
+            </div>
+            <div class="accordion" v-else-if="filteredDishes==false && Dishes.length > 0 && search == ''">
+
+              <!-- Card -->
+              <div class="card" v-for="(Dish, index) in Dishes">
+                <div class="card-header card-collapse" :id="'cardHeading'+index">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link btn-block card-btn collapsed p-2" role="button" aria-controls="card" aria-expanded="false" :data-target="'#card'+index" data-toggle="collapse">
+                      <span class="row align-items-center">
+                        <span class="col-6 mb-2 mb-md-0">
+                          <span class="media align-items-center">
+                            <img class="max-width-10 mr-3 rounded" :src="Dish.photoURL">
+                            <span class="media-body">
+                              <span class="h5">([Dish.name])</span><br>
+
+                              <span class="badge badge-success">
+                                <b>Grupo:</b>
+                                ([Dish.group])</span>
+                            </span>
+                          </span>
+                        </span>
+                        <span class="col-10 text-center">
+                          <div class="bg-dark rounded">
+                            <h2 class="h5 text-white mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                          </div>
+                        </span>
+                        <span class="col-2 text-right">
+                          <span class="card-btn-arrow">
+                            <span class="fas fa-arrow-down small"></span>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                  </h5>
                 </div>
-                <!-- Contacts -->
-                <div class="card-footer d-flex align-items-center font-size-1 mx-auto">
-                  <a @click="editDish(Dish.id)" class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" data-target="#formDishModal" data-toggle="modal" href="javascript:;">
-                    Editar
-                    <span class="fas fa-edit mr-1"></span>
-                  </a>
-                  <a @click="deleteDish(Dish.id, Dish.name)" class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" data-target="#alertDeleteModal" data-toggle="modal" href="javascript:;">
-                    Borrar
-                    <span class="fas fa-trash mr-1"></span>
-                  </a>
+                <div class="collapse" aria-labelledby="cardHeadingOne" :id="'card'+index" data-parent="#paymentDetails">
+                  <div class="card-body px-4">
+                    <!-- Card Details -->
+                    <div class="row">
+                      <!-- Gallery -->
+                      <img class="card-img-top w-100 h-100" v-if="Dish.photoURL" :src="Dish.photoURL">
+                      <img class="card-img-top w-65 mx-auto" src="https://image.flaticon.com/icons/svg/1847/1847172.svg" v-else width="Image Description">
+                      <!-- End Gallery -->
+                      <div class="card-body p-4">
+                        <!-- Posted Info -->
+                        <div class="media align-items-center pb-3">
+                          <div class="media-body">
+                            <b class="d-block">([Dish.name])</b>
+                            <h2 class="h5 mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
+                          </div>
+                        </div>
+                        <!-- End Posted Info -->
+                        <!-- Posted Info -->
+                        <div class="media align-items-center border-top py-3 mb-3">
+                          <div class="media-body">
+                            <small class="d-block text-muted">
+                              <b>Descripcion:</b>
+                            </small>
+                            <small class="d-block">([Dish.description])</small>
+                          </div>
+                        </div>
+                        <!-- End Posted Info -->
+                      </div>
+                      <!-- Contacts -->
+
+                    </div>
+                    <!-- End Card Details -->
+                  </div>
                 </div>
               </div>
-              <!-- End Property Item -->
+              <!-- End Card -->
             </div>
-            <div
-              class="row" v-else-if="filteredDishes == false && Dishes.length > 0 && search == ''">
-              <!-- Property Item -->
-              <div
-                class="card mb-5 col-xl-3 col-md-4 col-sm-6 col-12 p-0 animated fadeInUp" v-for="(Dish, index) in Dishes" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)">
-                <!-- Gallery -->
-                <img :src="Dish.photoURL" alt="Image Description" class="card-img-top w-100" v-if="Dish.photoURL">
-                <img class="card-img-top w-65 mx-auto" src="https://image.flaticon.com/icons/svg/1847/1847172.svg" v-else width="Image Description">
-                <div class="position-absolute top-0 left-0 pt-2 pl-3">
-                  <span class="badge badge-success">
-                    <b>Grupo:</b>
-                    ([Dish.group])</span>
-                </div>
-                <div class="position-absolute top-0 right-0 py-2 px-3">
-                  <div class="row justify-content-between align-items-center">
-                    <div class="col-12 bg-dark rounded-left">
-                      <h2 class="h5 text-white mb-0">$([Intl.NumberFormat().format(parseInt(Dish.price))])</h2>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Gallery -->
-                <div
-                  class="card-body p-4">
-                  <!-- Posted Info -->
-                  <div class="media align-items-center pb-3">
-                    <div class="media-body">
-                      <b class="d-block">([Dish.name])</b>
-                    </div>
-                  </div>
-                  <!-- End Posted Info -->
-                  <!-- Posted Info -->
-                  <div class="media align-items-center border-top py-3 mb-3">
-                    <div class="media-body">
-                      <small class="d-block text-muted">
-                        <b>Descripcion:</b>
-                      </small>
-                      <small class="d-block">([Dish.description])</small>
-                    </div>
-                  </div>
-                  <!-- End Posted Info -->
-                </div>
-                <!-- Contacts -->
-                <div class="card-footer d-flex align-items-center font-size-1 mx-auto">
-                  <a @click="editDish(Dish.id);" class="btn btn-soft-warning transition-3d-hover btn-sm mr-2" data-target="#formDishModal" data-toggle="modal" href="javascript:;">
-                    Editar
-                    <span class="fas fa-edit mr-1"></span>
-                  </a>
-                  <a @click="deleteDish(Dish.id)" class="btn btn-soft-danger transition-3d-hover btn-sm mr-2" data-target="#alertDeleteModal" data-toggle="modal" href="javascript:;">
-                    Borrar
-                    <span class="fas fa-trash mr-1"></span>
-                  </a>
-                </div>
-              </div>
-              <!-- End Property Item -->
-            </div>
-
-            <div
-              class="card-deck d-block d-md-flex" v-else>
-              <!-- Projects -->
-              <div class="card mb-5">
-                <div class="card-body p-4 text-center">
-                  <span>No hay registro disponibles</span>
-                </div>
-              </div>
-              <!-- End Projects -->
-            </div>
-
-            <!-- Pagination -->
-            <div class="d-flex justify-content-between align-items-center">
-              <nav aria-label="Page navigation">
-                <ul class="pagination mb-0">
-                  <li class="page-item ml-0" v-show="pag.pre">
-                    <a @click.prevent="app.pagActive(pag.active,'pre')" aria-label="Previous" class="page-link" href="javascript:void(0)">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Anterior</span>
-                    </a>
-                  </li>
-                  <li class="page-item active" id="page-1">
-                    <a @click="app.pagActive(1)" class="page-link" href="javascript:void(0)">1</a>
-                  </li>
-                  <li :id="'page-'+index" class="page-item" v-for="index in pag.numPages" v-show="index > 1">
-                    <a @click="app.pagActive(index)" class="page-link" href="javascript:void(0)">([index])</a>
-                  </li>
-                  <li class="page-item disabled" v-for="index in pag.numPages" v-show="index > 5">
-                    <a class="page-link" href="javascript:void(0)">...</a>
-                  </li>
-                  <li class="page-item">
-                    <a @click="app.pagActive(pag.active,'next')" aria-label="Next" class="page-link" href="javascript:void(0)" v-show="pag.next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Siguiente</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-
-              <small class="d-none d-sm-inline-block text-secondary" v-if="pag.numLength >= pag.numResult">Mostrando ([pag.active * pag.numResult]) de ([pag.numPages * pag.numResult]) Registros</small>
-              <small class="d-none d-sm-inline-block text-secondary" v-else>Mostrando ([pag.active * pag.numLength]) Registros</small>
-            </div>
-            <!-- End Pagination -->
+            <!-- End Accordion -->
           </div>
 
+          <div class="card-deck d-block d-md-flex" v-else>
+            <!-- Projects -->
+            <div class="card mb-5">
+              <div class="card-body p-4 text-center">
+                <span>No hay registro disponibles</span>
+              </div>
+            </div>
+            <!-- End Projects -->
+          </div>
         </div>
+        <!-- Accordion -->
       </div>
     </div>
-    <!-- End Content Section -->
-  </main>
-  <!-- ========== END MAIN ========== -->
+
+  <!-- End Content Section -->
+</main>
+<!-- ========== END MAIN ========== -->
 {% endblock %}
-{% block footer %}{% endblock %}
+{% block footer %}
+<!-- Breadcrumb Section -->
+<div class="bg-primary fixed-bottom py-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col text-left ml-2">
+        <a href="javascript:void(0)">
+          <i class="fas fa-arrow-left text-white fa-2x"></i>
+        </a>
+      </div>
+      <div class="col text-center">
+        <a href="javascript:void(0)">
+          <i class="fas fa-concierge-bell text-white fa-2x"></i>
+          <span class="badge badge-warning position-absolute top-0">0</span>
+        </a>
+      </div>
+      <div class="col text-right mr-2">
+        <a href="javascript:void(0)">
+          <i class="fas fa-share-alt text-white fa-2x"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Breadcrumb Section -->{% endblock %}
 {% block addJsPlugins %}
-  <script src="{{assets}}/vendor/slick-carousel/slick/slick.js"></script>
-{% endblock %}
+<script src="{{assets}}/vendor/slick-carousel/slick/slick.js"></script>{% endblock %}
 {% block addJsFront %}
-  <script src="{{assets}}/js/components/hs.slick-carousel.js"></script>
-  <script>
-    $(document).on('ready', function () { // initialization of slick carousel
-      $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
-    });
-  </script>
-
+<script src="{{assets}}/js/components/hs.slick-carousel.js"></script>
+<script>
+  $(document).on('ready', function () { // initialization of slick carousel
+    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+  });
+</script>
 {% endblock %}
-
 {% block appScript %}
-  <script src="/src/js/appDashboardHome.js"></script>
-  <script src="/src/js/appOrders.js"></script>
+<script src="/src/js/appDashboardHome.js"></script>
+<script src="/src/js/appDishes.js"></script>
+<script src="/src/js/appOrders.js"></script>
 {% endblock %}

@@ -1,9 +1,9 @@
 const appWaiters = new Vue({
   el: "#appWaiters",
   data: {
-    Waiters: [],
-    Waiter: [],
-    file: [],
+    Waiters: false,
+    Waiter: false,
+    file: false,
     pag: app.pag,
     search: '',
   },
@@ -34,7 +34,7 @@ const appWaiters = new Vue({
       };
     },
     editWaiter(id) {
-      this.file = [];
+      this.file = false;
       app.edit(id, "Waiters", function (data) {
         appWaiters.Waiter = data;
       });
@@ -47,36 +47,37 @@ const appWaiters = new Vue({
     },
     deleteWaiter(id) {
       $("#deleted").on("click", function () {
+        this.deletedFileUpload();
         app.deleted(id, "Waiters");
-        if (appWaiters.Waiter.photoURL) {
-          appWaiters.deletedFileUpload();
-        }
         $("#alertDeleteModal").modal("hide");
       })
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
       this.file.photoURL = URL.createObjectURL(this.file);
-
-      app.filesUpload(this.Waiter.name, this.file, function (dataURL) {
-        appWaiters.Waiter.photoURL = dataURL;
-      });
+      this.uploadFilesWaiters();
+    },
+    uploadFilesWaiters() {
+      if (this.Waiter.name) {
+        app.filesUpload(this.Waiter.name, this.file, function (dataURL) {
+          appWaiters.Waiter.photoURL = dataURL;
+        });
+      }
     },
     deletedFileUpload() {
-      app.filesUploadDeleted(this.Waiter.name + '.' + this.Waiter.photoURL.split(".")[5].split("?")[0]);
-      this.file = [];
+      if (this.Waiter.name){
+        app.filesUploadDeleted(this.Waiter.name + '.' + this.Waiter.photoURL.split(".")[5].split("?")[0]);
+      }
+      this.Waiter.photoURL = false;
     }
   },
   delimiters: ['([', '])'],
 });
 
-onSnapshot(
-  db.collection("Waiters")
-    .orderBy("name", "asc"), function (data) {
-      appWaiters.Waiters = data;
-      app.pagination(data.length, 12);
-    }
-);
+onSnapshot("Waiters",["name", "asc"], function (data) {
+  appWaiters.Waiters = data;
+  app.pagination(data.length, 12);
+});
 
 
 

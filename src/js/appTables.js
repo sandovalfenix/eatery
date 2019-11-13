@@ -1,24 +1,17 @@
 const appTables = new Vue({
   el: '#appTables',
   data: {
-    Tables: [],
+    Tables: false,
     Table: [],
     qrCodeURL: 'javascript:void(0)',
   },
   methods: {
     addTable() {
-      if($('#formTable').valid()) {
+      if ($('#formTable').valid()) {
         app.create('Tables', this.Table);
         $('#formTableModal').modal('hide');
-        this.Table = [];
-      } else {
-        console.log('error en el formulario');
+        this.Table = false;
       }
-    },
-    editTable(id) {
-      app.edit(id, 'Tables', function (data) {
-        appTables.Table = data;
-      });
     },
     editTable(id) {
       app.edit(id, "Tables", function (data) {
@@ -26,10 +19,10 @@ const appTables = new Vue({
       });
     },
     updateTable(id) {
-      if($('#formTable').valid()) {
+      if ($('#formTable').valid()) {
         app.update(id, 'Tables', this.Table);
         $('#formTableModal').modal('hide');
-        this.Table = [];
+        this.Table = false;
       } else {
         console.log('error en el formulario');
       }
@@ -48,7 +41,7 @@ const appTables = new Vue({
       var formData = new FormData();
       formData.append(
         'codeContents',
-        array[0] + '//' + array[2] + '/orders/' + id
+        array[0] + '//' + array[2] + '/customer/orders/' + app.Restaurant + '_' + id
       );
       formData.append('id', id);
       app.createQR(formData, function (data) {
@@ -68,6 +61,6 @@ const appTables = new Vue({
   delimiters: ['([', '])']
 });
 
-onSnapshot(db.collection('Tables').orderBy('name', 'asc'), function (data) {
+onSnapshot('Tables', ['name', 'asc'], function (data) {
   appTables.Tables = data;
 });

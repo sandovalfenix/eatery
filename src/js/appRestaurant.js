@@ -68,11 +68,15 @@ const appRestaurant = new Vue({
   delimiters: ['([', '])'],
 });
 
-onSnapshot(
-  db.collection("Restaurants")
-    .orderBy("name", "asc"),
-  function (data) {
-    appRestaurant.Restaurants = data;
+db.collection("Restaurants")
+  .orderBy("name", "asc").onSnapshot(function (querySnapshot) {
+    var collectionData = [];
+    querySnapshot.forEach(function (doc) {
+      var data = doc.data();
+      data.id = doc.id;
+      collectionData.push(data);
+    });
+    appRestaurant.Restaurants = collectionData;
   }
 );
 

@@ -100,8 +100,7 @@ const appAuth = new Vue({
   delimiters: ['([', '])'],
 });
 
-onSnapshot(
-  db.collection("Users"), function (data) {
+onSnapshot("Users", false, function (data) {
     appAuth.Users = data;
   }
 );

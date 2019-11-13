@@ -52,13 +52,13 @@
                 <div
                   class="js-form-message media align-items-center">
                   <!-- Update Avatar Form -->
-                  <div class="u-lg-avatar mr-3" v-if="Waiter.photoURL">
-                    <img :src="Waiter.photoURL" alt="Image Description" class="img-fluid rounded-circle">
-                  </div>
                   <div class="u-lg-avatar mr-3" v-if="file.photoURL">
                     <img :src="file.photoURL" alt="Image Description" class="img-fluid rounded-circle">
                   </div>
-
+                  <div class="u-lg-avatar mr-3" v-if="Waiter.photoURL">
+                    <img :src="Waiter.photoURL" alt="Image Description" class="img-fluid rounded-circle">
+                  </div>
+                  <br>
                   <div class="media-body">
                     <label class="btn btn-sm btn-primary transition-3d-hover file-attachment-btn mb-1 mb-sm-0 mr-1" for="file">
                       Subir nueva imagen

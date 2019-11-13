@@ -8,6 +8,7 @@ const app = new Vue({
       next: true,
       pre: false,
     },
+    Restaurant: false,
   },
   methods: {
     signOut() {
@@ -32,7 +33,7 @@ const app = new Vue({
     },
     create(collection, docData) {
       var Doc = Object.assign({}, docData);
-      db.collection("Restaurants/"+collection).add(Doc)
+      db.collection("Restaurants/" + this.Restaurant + "/" + collection).add(Doc)
         .then(function (docRef) {
           app.alerts.push({
             type: 'alert-success',
@@ -47,7 +48,7 @@ const app = new Vue({
         });
     },
     edit(id, collection, callback) {
-      var docRef = db.collection("Restaurants/"+collection).doc(id);
+      var docRef = db.collection("Restaurants/" + this.Restaurant + "/" + collection).doc(id);
       docRef.get().then(function (doc) {
         if (doc.exists) {
           var data = doc.data();
@@ -69,7 +70,7 @@ const app = new Vue({
     update(id, collection, docData) {
       delete docData.id;
       var Doc = Object.assign({}, docData);
-      db.collection("Restaurants/"+collection).doc(id).update(Doc)
+      db.collection("Restaurants/" + this.Restaurant + "/" + collection).doc(id).update(Doc)
         .then(function () {
           app.alerts.push({
             type: 'alert-success',
@@ -83,7 +84,7 @@ const app = new Vue({
         });
     },
     deleted(id, collection) {
-      db.collection("Restaurants/"+collection).doc(id).delete().then(function () {
+      db.collection("Restaurants/" + this.Restaurant + "/" + collection).doc(id).delete().then(function () {
         app.alerts.push({
           type: 'alert-success',
           msj: 'Registro eliminado exitosamente!',
@@ -139,10 +140,13 @@ const app = new Vue({
           msj: 'Error: código ' + error.code + ': ' + error.message,
         });
       });
+
+      this.file = false;
     },
     filesUploadDeleted(name) {
       var desertRef = storageRef.child('img/' + name);
       desertRef.delete();
+      this.file = false;
     },
     createQR(formData, callback) {
       this.$http.post('/src/php/qrCode.php', formData).then(function (response) {
@@ -156,9 +160,9 @@ const app = new Vue({
     },
     print(html) {
       $('<iframe>', {
-          name: 'frame',
-          class: 'printFrame'
-        })
+        name: 'frame',
+        class: 'printFrame'
+      })
         .appendTo('body')
         .contents().find('body')
         .append(html);
@@ -174,15 +178,50 @@ const app = new Vue({
   delimiters: ['([', '])'],
 });
 
-function onSnapshot(collection, callback) {
-  db.collection("Restaurants").where
-  collection.onSnapshot(function (querySnapshot) {
-    var collectionData = [];
-    querySnapshot.forEach(function (doc) {
-      var data = doc.data();
-      data.id = doc.id;
-      collectionData.push(data);
+
+
+function onSnapshot(collection, orderBy = false, callback) {
+  if (app.User) {
+    db.collection("Restaurants").where("uid", "==", app.User.uid).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          if (doc.exists) {
+            app.Restaurant = doc.id;
+            if (orderBy) {
+              collectionRef = db.collection("Restaurants/" + app.Restaurant + "/" + collection).orderBy(orderBy[0], orderBy[1])
+            } else {
+              collectionRef = db.collection("Restaurants/" + app.Restaurant + "/" + collection)
+            }
+            collectionRef.onSnapshot(function (querySnapshot) {
+              var collectionData = [];
+              querySnapshot.forEach(function (doc) {
+                var data = doc.data();
+                data.id = doc.id;
+                collectionData.push(data);
+              });
+              callback(collectionData);
+            });
+          }
+        });
+      });
+  } else {
+    if (orderBy) {
+      collectionRef = db.collection("Restaurants/" + app.Restaurant + "/" + collection).orderBy(orderBy[0], orderBy[1])
+    } else {
+      collectionRef = db.collection("Restaurants/" + app.Restaurant + "/" + collection)
+    }
+    collectionRef.onSnapshot(function (querySnapshot) {
+      var collectionData = [];
+      querySnapshot.forEach(function (doc) {
+        var data = doc.data();
+        data.id = doc.id;
+        collectionData.push(data);
+      });
+      callback(collectionData);
     });
-    callback(collectionData);
-  });
+  }
 }
+
+
+
+

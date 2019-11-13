@@ -1,9 +1,9 @@
 const appDishes = new Vue({
   el: "#appDishes",
   data: {
-    Dishes: [],
-    Dish: [],
-    file: [],
+    Dishes: false,
+    Dish: false,
+    file: false,
     pag: app.pag,
     search: '',
   },
@@ -43,7 +43,7 @@ const appDishes = new Vue({
       }
     },
     editDish(id) {
-      this.file = [];
+      this.file = false;
       app.edit(id, "Dishes", function (data) {
         appDishes.Dish = data;
       });
@@ -54,37 +54,42 @@ const appDishes = new Vue({
         $("#formDishModal").modal("hide");
       }
     },
-    deleteDish(id, name) {
+    deleteDish(id) {
       $("#deleted").on("click", function () {
+        this.deletedFileUpload();
         app.deleted(id, "Dishes");
-        this.Dish.name = name;
-        deletedFileUpload();
         $("#alertDeleteModal").modal("hide");
       })
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
       this.file.photoURL = URL.createObjectURL(this.file);
-
-      app.filesUpload(this.Dish.name, this.file, function (dataURL) {
-        appDishes.Dish.photoURL = dataURL;
-      });
+      this.uploadFilesDish();
+    },
+    uploadFilesDish() {
+      if (this.Dish.name) {
+        app.filesUpload(this.Dish.name, this.file, function (dataURL) {
+          appDishes.Dish.photoURL = dataURL;
+        });
+      }
     },
     deletedFileUpload() {
-      app.filesUploadDeleted(this.Dish.name);
-      this.file = [];
+      if (this.Dish.name){
+        app.filesUploadDeleted(this.Dish.name+'.'+this.Dish.photoURL.split(".")[5].split("?")[0]);
+      }
+      this.Dish.photoURL = false;
     }
   },
   delimiters: ['([', '])'],
 });
 
-onSnapshot(
-  db.collection("Dishes")
-    .orderBy("name", "asc"), function (data) {
+onSnapshot("Dishes", ["name", "asc"], function (data) {
       appDishes.Dishes = data;
       app.pagination(data.length, 4);
     }
 );
+
+
 
 
 
