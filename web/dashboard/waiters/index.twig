@@ -1,0 +1,140 @@
+{% extends "dashboard_layout.twig" %}
+{% block title %}Meseros{% endblock %}
+
+{% block cssPlugins %}
+  <link rel="stylesheet" href="{{assets}}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="{{assets}}/vendor/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
+{% endblock %}
+{% block container %}
+<main id="appWaiters">
+  <div class="bg-light animated fadeIn slow delay-2s">
+    <div class="container space-3 space-lg-4">
+      <div class="row justify-content-between align-items-center mb-4">
+          <!-- Title -->
+          <div class="col-sm-4 col-md-6 mb-3 mb-sm-0">
+          <h2 class="h6 mb-0">Total Meseros Registrados ([Waiters.length])</h2>
+          </div>
+          <!-- End Title -->
+
+          <!-- Filter -->
+          <div class="col-sm-8 col-md-6 text-sm-right">
+            <ul class="list-inline mb-0">
+                <li v-if="Waiters" class="list-inline-item mb-3">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-warning text-white border-0" id="searchProperty">
+                        <span class="fas fa-search"></span>
+                      </span>
+                    </div>
+                    <input class="form-control border-0" type="text" v-model="search" placeholder="Buscar" >
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn btn-sm btn-soft-primary" href="javascript:void(0)"
+                    data-toggle="modal"
+                    data-target="#formWaiterModal"
+                    @click="Waiter=[]; file='';">
+                    <span class="fas fa-plus"></span> Añadir
+                  </a>
+                </li>
+            </ul>
+          </div>
+          <!-- End Filter -->
+      </div>
+      <div class="mb-7">
+        <div v-if="filteredWaiters" class="row por aqui busco">
+          <!-- Friends List -->
+					<a v-for="(Waiter, index) in filteredWaiters" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)" class="card card-frame mb-3 col-lg-4 col-sm-6 col-12" href="#" data-toggle="modal"
+                data-target="#formWaiterModal"
+                @click="editWaiter(Waiter.id)">
+						<div class="card-body">
+							<div class="media">
+									<div class="u-avatar mr-3">
+										<img v-if="Waiter.photoURL" class="img-fluid rounded-circle" :src="Waiter.photoURL" alt="Image Description">
+										<img v-else class="img-fluid rounded-circle" src="https://image.flaticon.com/icons/svg/180/180688.svg" alt="Image Description">
+									</div>
+									<div class="media-body">
+										<h4 class="h6 text-dark mb-0">([Waiter.name])</h4>
+										<span>Mesero</span>
+									</div>
+							</div>
+						</div>
+					</a>
+					<!-- End Friends List -->
+        </div>
+        <div v-else-if="filteredWaiters == false && Waiters.length > 0 && search == ''" class="row por aqui registro">
+          <!-- Friends List -->
+					<a v-for="(Waiter, index) in Waiters" v-show="(((pag.active - 1) * pag.numResult) <= index) && ((pag.active * pag.numResult) > index)" class="card card-frame mb-3 col-lg-4 col-sm-6 col-12" href="#" data-toggle="modal"
+                data-target="#formWaiterModal"
+                @click="editWaiter(Waiter.id)">
+						<div class="card-body">
+							<div class="media">
+									<div class="u-avatar mr-3">
+										<img v-if="Waiter.photoURL" class="img-fluid rounded-circle" :src="Waiter.photoURL" alt="Image Description">
+										<img v-else class="img-fluid rounded-circle" src="https://image.flaticon.com/icons/svg/180/180688.svg" alt="Image Description">
+									</div>
+									<div class="media-body">
+										<h4 class="h6 text-dark mb-0">([Waiter.name])</h4>
+										<span>Mesero</span>
+									</div>
+							</div>
+						</div>
+					</a>
+					<!-- End Friends List -->
+        </div>
+
+        <div v-else class="card-deck d-block d-md-flex">
+          <!-- Projects -->
+          <div class="card mb-5">
+              <div class="card-body p-4 text-center">
+              <span>No existe ningun registro</span>
+              </div>
+          </div>
+          <!-- End Projects -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center">
+            <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <li v-show="pag.pre" class="page-item ml-0">
+                <a class="page-link" href="javascript:void(0)" aria-label="Previous" @click.prevent="app.pagActive(pag.active,'pre')">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                </li>
+                <li id="page-1" class="page-item active"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(1)">1</a></li>
+                <li v-for="index in pag.numPages" v-show="index > 1" :id="'page-'+index" class="page-item"><a class="page-link" href="javascript:void(0)" @click="app.pagActive(index)">([index])</a></li>
+                <li v-for="index in pag.numPages" v-show="index > 5" class="page-item disabled"><a class="page-link" href="javascript:void(0)">...</a></li>
+                <li class="page-item">
+                <a  v-show="pag.next" class="page-link" href="javascript:void(0)" aria-label="Next" @click="app.pagActive(pag.active,'next')">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+                </li>
+            </ul>
+            </nav>
+
+            <small v-if="pag.numLength >= pag.numResult" class="d-none d-sm-inline-block text-secondary">Mostrando ([pag.active * pag.numResult]) de ([pag.numResult]) Registros</small>
+						<small v-else class="d-none d-sm-inline-block text-secondary">Mostrando ([pag.active * pag.numLength]) Registros</small>
+        </div>
+        <!-- End Pagination -->
+      </div>
+    </div>
+  </div>
+  <!-- End Content Section -->
+
+  {% include "/waiters/formWaiters.twig" %}
+</main>
+{% endblock %}
+{% block addJsPlugins %}
+  <script src="{{assets}}/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  <script src="{{assets}}/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+{% endblock %}
+{% block addJsFront %}
+  <script src="{{assets}}/js/components/hs.selectpicker.js"></script>
+  <script src="{{assets}}/js/components/hs.range-datepicker.js"></script>
+{% endblock %}
+{% block appScript %}
+  <script src="/src/js/appWaiters.js"></script>
+{% endblock %}

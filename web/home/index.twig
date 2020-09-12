@@ -1,7 +1,7 @@
-{% extends "default_layout.twig" %}
-{% block title %}Home - Yanic{% endblock %}
-{% block container %}
+{% extends "sign/index.twig" %}
+{% block signIn %}
+  {% include "sign/email/in.twig" %}
 {% endblock %}
-{% block appScript %}
-  <script src="/src/appUsers.js"></script>
+{% block signUp %}
+  {% include "sign/email/up.twig" %}
 {% endblock %}

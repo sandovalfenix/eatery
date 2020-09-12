@@ -1,0 +1,87 @@
+<!-- Waiters Modal Window -->
+<div aria-hidden="true" aria-labelledby="formWaiterModalLabel" class="modal fade" id="formWaiterModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formWaiterModalLabel" v-if="Waiter.id">Editar Mesero</h5>
+        <h5 class="modal-title" id="formWaiterModalLabel" v-else>Nuevo Mesero</h5>
+        <button @click="Waiter = [];file = false;" aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="js-validate" id="formWaiter">
+        <div class="modal-body">
+          <div class="card-body p-5">
+            <div
+              class="row">
+              <!-- Input -->
+              <div class="col-sm-12 mb-6">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Nombre Completo
+                    <span class="text-danger">*</span>
+                  </label>
+
+                  <input aria-label="Mesero" class="form-control" data-error-class="u-has-error" data-msg="Por favor ingrese un nombre valido." data-success-class="u-has-success" minlength="3" name="name" placeholder="Mesero" required type="text" v-model="Waiter.name">
+                </div>
+              </div>
+              <!-- End Input -->
+              <!-- Input -->
+              <div class="col-md-12 mb-6">
+                <div class="js-form-message">
+                  <label class="form-label">
+                    Telefono
+                    <span class="text-danger">*</span>
+                  </label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend" id="phoneNumber">
+                      <span class="input-group-text">+57</span>
+                    </div>
+                    <input aria-describedby="phoneNumber" aria-label="Phone number" class="form-control" data-error-class="u-has-error" data-msg="Por favor ingrese un numero de telefono valido." data-success-class="u-has-success" minlength="10" name="phome" placeholder="Phone number" required type="text" v-model="Waiter.phone">
+                  </div>
+                </div>
+              </div>
+              <!-- End Input -->
+              <div class="w-100"></div>
+            </div>
+            <div
+              class="row">
+              <!-- Input -->
+              <div class="col-sm-12 mb-6">
+                <div
+                  class="js-form-message media align-items-center">
+                  <!-- Update Avatar Form -->
+                  <div class="u-lg-avatar mr-3" v-if="file.photoURL">
+                    <img :src="file.photoURL" alt="Image Description" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="u-lg-avatar mr-3" v-if="Waiter.photoURL">
+                    <img :src="Waiter.photoURL" alt="Image Description" class="img-fluid rounded-circle">
+                  </div>
+                  <br>
+                  <div class="media-body">
+                    <label class="btn btn-sm btn-primary transition-3d-hover file-attachment-btn mb-1 mb-sm-0 mr-1" for="file">
+                      Subir nueva imagen
+                      <input @change="handleFileUpload" class="file-attachment-btn__label" id="file" name="file-attachment" ref="file" type="file">
+                    </label>
+
+                    <a @click="deletedFileUpload" class="btn btn-sm btn-soft-secondary transition-3d-hover mb-1 mb-sm-0" href="javascript:void(0)">Borrar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" data-dismiss="modal" type="button">Cancelar</button>
+          <button @click="deleteWaiter(Waiter.id)" class="btn btn-sm btn-soft-danger transition-3d-hover mr-1" data-dismiss="modal" data-target="#alertDeleteModal" data-toggle="modal" type="button" v-if="Waiter.id">Borrar</button>
+          <button @click="updateWaiter(Waiter.id)" class="btn btn-sm btn-warning transition-3d-hover" type="submit" v-if="Waiter.id">Editar Mesero</button>
+
+          <button class="btn btn-sm btn-primary transition-3d-hover" v-else type="submit" @click="addWaiter">Añadir Mesero</button>
+        </div>
+        <!-- End Buttons -->
+      </form>
+    </div>
+  </div>
+  <!-- End Waiters Modal Window -->

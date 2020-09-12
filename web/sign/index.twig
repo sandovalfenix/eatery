@@ -1,0 +1,175 @@
+{% extends "default_layout.twig" %}
+{% block title %}Login
+{% endblock %}
+{% block cssPlugins %}
+  <link rel="stylesheet" href="{{assets}}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+{% endblock %}
+{% block header %}
+  <header class="u-header u-header--bg-transparent u-header--fix-top" id="header">
+    <div class="u-header__section d-none d-lg-flex">
+
+      <div
+        class="container-fluid" id="logoAndNav">
+        <!-- Nav -->
+        <nav
+          class="navbar navbar-expand u-header__navbar">
+          <!-- White Logo -->
+          <a aria-label="Front" class="navbar-brand u-header__navbar-brand u-header__navbar-brand-center u-header__navbar-brand-text-white" href="#">
+            <img src="{{assets}}/img/logo_eatery.png" width="65">
+            <span class="u-header__navbar-brand-text">Eatery</span>
+          </a>
+          <!-- End White Logo -->
+
+          <!-- Button -->
+          <div class="ml-auto d-none d-sm-block">
+            <a class="btn btn-sm btn-primary transition-3d-hover" href="/" target="_blank">
+              <i class="fab fa-google-play"></i>
+              Descargar
+            </a>
+          </div>
+          <!-- End Button -->
+        </nav>
+        <!-- End Nav -->
+      </div>
+    </div>
+    <div class="u-header__section bg-primary d-flex d-lg-none">
+
+      <div
+        class="container-fluid">
+        <!-- Nav -->
+        <nav
+          class="navbar navbar-expand u-header__navbar">
+          <!-- Default Logo -->
+          <a aria-label="Front" class="navbar-brand u-header__navbar-brand u-header__navbar-brand-center u-header__navbar-brand-text-white" href="/">
+
+            <img src="{{assets}}/img/logo_eatery.png" style="width:3em">
+            <span class="d-inline-block u-header__navbar-brand-text">Eatery</span>
+          </a>
+          <!-- End Default Logo -->
+        </nav>
+        <!-- End Nav -->
+      </div>
+    </div>
+  </header>
+{% endblock %}
+{% block container %}
+  <!-- ========== MAIN ========== -->
+  <main id="appAuth" role="main">
+    <div class="alert-fixed-bottom" v-show="alert">
+      <div :class="'alert '+alert.type+'   alert-dismissible animated fadeInUp delay-3 my-2 mx-2'" role="alert">
+        <span v-html="alert.msj"></span>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+    <!-- Form -->
+    <div class="d-flex align-items-center position-relative height-lg-100vh">
+      <div class="col-lg-5 col-xl-4 d-none d-lg-flex align-items-center gradient-half-primary-v1 height-lg-100vh px-0">
+        <div
+          class="w-100 p-5">
+          <!-- SVG Quote -->
+          <figure class="text-center mb-5 mx-auto">
+            <svg height="40px" style="enable-background:new 0 0 8 8;" viewbox="0 0 8 8" width="40px" x="0px" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" y="0px">
+              <path class="fill-white" d="M3,1.3C2,1.7,1.2,2.7,1.2,3.6c0,0.2,0,0.4,0.1,0.5c0.2-0.2,0.5-0.3,0.9-0.3c0.8,0,1.5,0.6,1.5,1.5c0,0.9-0.7,1.5-1.5,1.5 C1.4,6.9,1,6.6,0.7,6.1C0.4,5.6,0.3,4.9,0.3,4.5c0-1.6,0.8-2.9,2.5-3.7L3,1.3z M7.1,1.3c-1,0.4-1.8,1.4-1.8,2.3 c0,0.2,0,0.4,0.1,0.5c0.2-0.2,0.5-0.3,0.9-0.3c0.8,0,1.5,0.6,1.5,1.5c0,0.9-0.7,1.5-1.5,1.5c-0.7 0-1.1-0.3-1.4-0.8 C4.4,5.6,4.4,4.9,4.4,4.5c0-1.6,0.8-2.9,2.5-3.7L7.1,1.3z"/>
+            </svg>
+          </figure>
+          <!-- End SVG Quote -->
+
+          <!-- Testimonials Carousel Main -->
+          <div class="js-slick-carousel u-slick mb-4" data-autoplay="true" data-fade="true" data-infinite="true" data-nav-for="#testimonialsNavPagination" data-speed="5000" id="testimonialsNavMain">
+            <div
+              class="js-slide">
+              <!-- Testimonials -->
+              <div class="w-md-80 w-lg-60 text-center mx-auto">
+                <blockquote class="h5 text-white font-weight-normal mb-4">Es novedoso y la eficas se realiza de forma rápida y sincronizada. ¡En tiempo real!</blockquote>
+                <h2 class="h6 text-white-70">Restaurante YouMe Sushi, Chile</h2>
+              </div>
+              <!-- End Testimonials -->
+            </div>
+
+            <div
+              class="js-slide">
+              <!-- Testimonials -->
+              <div class="w-md-80 w-lg-60 text-center mx-auto">
+                <blockquote class="h5 text-white font-weight-normal mb-4">La app es realmente agradable y ofrece un gran conjunto de opciones. ¡Gracias!</blockquote>
+                <h2 class="h6 text-white-70">Restaurante Lucia´s, Chile</h2>
+              </div>
+              <!-- End Testimonials -->
+            </div>
+
+            <div
+              class="js-slide">
+              <!-- Testimonials -->
+              <div class="w-md-80 w-lg-60 text-center mx-auto">
+                <blockquote class="h5 text-white font-weight-normal mb-4">Me encanta Eatery, me encanta su facilidad de uso, me encanta el hecho de que tengo total libertad para trabajar...</blockquote>
+                <h3 class="h6 text-white-70">Foob Style, Colombia</h3>
+              </div>
+              <!-- End Testimonials -->
+            </div>
+          </div>
+          <!-- End Testimonials Carousel Main -->
+
+          <!-- Testimonials Carousel Pagination -->
+          <div class="js-slick-carousel u-slick u-slick--transform-off u-slick--pagination-modern mx-auto" data-autoplay="true" data-center-mode="true" data-focus-on-select="true" data-infinite="true" data-is-thumbs="true" data-nav-for="#testimonialsNavMain" data-slides-show="3" data-speed="5000" id="testimonialsNavPagination"></div>
+          <!-- End Testimonials Carousel Pagination -->
+
+          <!-- Clients -->
+          <div class="position-absolute right-0 bottom-0 left-0 text-center p-5">
+            <h4 class="h6 text-white-70 mb-3">Aitheria partners</h4>
+            <div class="d-flex justify-content-center">
+              <div class="mx-4">
+                <img class="u-clients" src="{{assets}}/svg/clients-logo/logo-firebase.png" alt="Image Description">
+              </div>
+              <div class="mx-4">
+                <img class="u-clients" src="{{assets}}/svg/clients-logo/google-white.png" alt="Image Description">
+              </div>
+              <div class="mx-4">
+                <img class="u-clients" src="{{assets}}/svg/clients-logo/cropped-logo.png" alt="Image Description">
+              </div>
+            </div>
+          </div>
+          <!-- End Clients -->
+        </div>
+      </div>
+      <div class="container">
+        <div class="row no-gutters">
+          <div
+            class="col-md-8 col-lg-7 col-xl-6 offset-md-2 offset-lg-2 offset-xl-3 space-top-2 space-lg-0">
+            <!-- Form Sign In -->
+            {% block signIn %}{% endblock %}
+            <!-- End Form -->
+            <!-- Form Sign Up-->
+            {% block signUp %}{% endblock %}
+            <!-- End Login Buttons -->
+            {% block providers %}{% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ========== END MAIN ========== -->
+{% endblock %}
+{% block jsPlugins %}
+  <!-- JS Implementing Plugins -->
+  <script src="{{assets}}/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script src="{{assets}}/vendor/slick-carousel/slick/slick.js"></script>
+  <script src="{{assets}}/vendor/appear.js"></script>
+  <script src="{{assets}}/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  {% block addJsPlugins %}{% endblock %}
+{% endblock %}
+{% block jsFront %}
+  <!-- JS Front -->
+  <script src="{{assets}}/js/hs.core.js"></script>
+  <script src="{{assets}}/js/components/hs.validation.js"></script>
+  <script src="{{assets}}/js/components/hs.slick-carousel.js"></script>
+  <script src="{{assets}}/js/components/hs.show-animation.js"></script>
+  <script src="{{assets}}/js/components/hs.selectpicker.js"></script>
+
+  <!-- JS Plugins Init. -->
+  <script src="{{assets}}/js/main.js"></script>
+  {% block addJsFront %}{% endblock %}
+{% endblock %}
+{% block appScript %}
+  <script src="/src/js/appAuth.js"></script>
+{% endblock %}

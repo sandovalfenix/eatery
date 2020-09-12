@@ -1,0 +1,79 @@
+<form
+  class="js-validate mt-3" v-show="signIn">
+  <!-- Title -->
+  <div class="mb-7">
+    <h2 class="h3 text-primary font-weight-normal mb-0">Bienvenido a
+      <span class="font-weight-semi-bold">Eatery</span>
+    </h2>
+    <p>Inicie sesión para administrar su cuenta.</p>
+  </div>
+  <!-- End Title -->
+  <!-- Form Group -->
+  <div class="js-form-message form-group" id="step1">
+    <div class="mb-2">
+      <label class="h6 small d-block text-uppercase mb-2">
+        Seleccione un Pais
+      </label>
+      <div
+        class="input-group">
+        <!-- Select -->
+        <select class="mb-3 form-control" title="Selecciona un Pais" v-model="UserAuth.dialCode">
+          <option :value="'+'+Country.callingCodes" v-for="(Country, index) in Countries">([Country.name+' (+'+Country.callingCodes+')'])</option>
+
+        </select>
+        <!-- End Select -->
+      </div>
+      <!-- End Select -->
+    </div>
+
+    <!-- Input Group -->
+    <label class="h6 small d-block text-uppercase mb-2">
+      Numero de Telefono
+    </label>
+    <div class="js-form-message js-focus-state">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">([UserAuth.dialCode])</span>
+        </div>
+        <input aria-describedby="phoneNumber" aria-label="Numero de Telefono" class="form-control" data-error-class="u-has-error" data-msg="Por gavor ingresa un numero de Telefono valido." data-success-class="u-has-success" id="phoneNumber" placeholder="Numero de Telefono" required type="phone" v-modal="UserAuth.phoneNumber">
+      </div>
+    </div>
+    <!-- End Input Group -->
+
+  </div>
+  <!-- End Form Group -->
+  <!-- Form Group -->
+  <div
+    class="js-form-message form-group d-none" id="step2">
+    <!-- Input Group -->
+    <label class="h6 small d-block text-uppercase mb-2">
+      Codigo de Verificacion
+    </label>
+    <div class="js-form-message js-focus-state">
+      <input aria-describedby="codeVerify" aria-label="Codigo" class="form-control" data-error-class="u-has-error" data-msg="Por gavor ingresa un Codigo valido." data-success-class="u-has-success" id="signupSrCodeVerify" minlength="6" placeholder="Codigo" required type="text">
+    </div>
+    <!-- End Input Group -->
+
+  </div>
+  <!-- End Form Group -->
+
+
+  <!-- Button -->
+  <div class="row align-items-center mb-5">
+    <div class="col-6">
+      <span class="small text-muted">¿No tienes una cuenta?</span>
+      <a @click="changeSignUp" class="small" href="javascript:void(0);">Regístrate</a>
+    </div>
+
+    <div class="col-6 text-right" id="nextStep">
+      <button @click="signInPhone(false)" class="btn btn-primary transition-3d-hover">Siguiente</button>
+    </div>
+
+    <input class="d-none" id="reCaptcha">
+
+    <div class="col-6 text-right d-none" id="submit">
+      <button @click="codePhone" class="btn btn-primary transition-3d-hover" type="submit">Empezar</button>
+    </div>
+  </div>
+  <!-- End Button -->
+</form>
